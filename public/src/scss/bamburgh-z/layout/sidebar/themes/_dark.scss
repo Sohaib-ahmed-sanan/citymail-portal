@@ -1,0 +1,115 @@
+// Sidebar dark
+
+.app-sidebar {
+  &--dark {
+
+    .sidebar-header {
+      color: rgba($white, .2);
+    }
+
+    .hamburger-inner,
+    .hamburger-inner:after,
+    .hamburger-inner:before {
+      background: rgba($white, .5) !important;
+    }
+
+    .app-sidebar--header {
+      &:after {
+        background: rgba($white, .1);
+      }
+    }
+
+    .app-sidebar--footer {
+      background: $sidebar-footer-bg;
+    }
+
+    .sidebar-navigation {
+      ul {
+        @include list-unstyled;
+        display: flex;
+        flex-direction: column;
+
+        & > li {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+
+          &.mm-active {
+            & > a {
+              color: rgba($white, .9);
+              background: rgba($black, .1);
+
+              svg {
+                opacity: .6;
+              }
+            }
+          }
+        }
+
+        a {
+          color: rgba($white, .5);
+
+          &:after {
+            background: rgba($black,.2);
+          }
+
+          svg {
+            color: $white;
+            fill: rgba($white, .25);
+            opacity: .2;
+          }
+
+          .fa-angle-right {
+            opacity: .4;
+          }
+
+          &:hover {
+            color: rgba($white, .9);
+            background: rgba($black, .1);
+
+            &:after {
+              background: rgba($black,.5);
+            }
+
+            svg {
+              opacity: .6;
+            }
+          }
+        }
+      }
+
+      // Sidebar mini
+
+      &--mini {
+        ul {
+          li {
+            a {
+              &:hover {
+                background: rgba($white, .9);
+
+                svg {
+                  color: $primary;
+                  fill: rgba($primary, .35);
+                  opacity: 1;
+                }
+              }
+            }
+
+            &.mm-active {
+              a {
+                background: rgba($white, .9);
+
+                svg {
+                  color: $primary;
+                  fill: rgba($primary, .35);
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

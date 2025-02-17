@@ -1,0 +1,76 @@
+// SweetAlert
+
+.swal2-modal {
+  box-shadow: $modal-content-box-shadow-xs;
+  @include border-radius($modal-content-border-radius);
+  background: $modal-content-bg;
+}
+
+// Notify
+
+.alert-notify {
+  background: transparent;
+  position: relative;
+  border: 0;
+  @include border-radius($border-radius-sm);
+  width: calc(100% - #{$spacer});
+  max-width: 600px;
+
+  &:hover {
+    .alert-wrapper-bg {
+      opacity: .98;
+    }
+  }
+
+  .alert-wrapper-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transition: $transition-base;
+    @include border-radius(inherit);
+    opacity: .9;
+    z-index: 3;
+  }
+
+  .alert-icon {
+    width: 40px;
+    text-align: center;
+    font-size: $font-size-xl;
+  }
+
+  .alert-title {
+    font-size: $font-size-lg / 1.1;
+  }
+
+  .close {
+    z-index: 6;
+    text-shadow: none;
+    top: 0 !important;
+    right: 0 !important;
+    width: 100%;
+    height: 100%;
+    transition: $transition-base;
+    @include border-radius(inherit);
+
+    span {
+      position: absolute;
+      right: $alert-padding-x;
+      top: $alert-padding-y;
+    }
+
+    &:hover {
+      background: rgba($white, .1);
+      color: $white;
+    }
+  }
+
+  .alert-content-wrapper {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    position: relative;
+    z-index: 5;
+  }
+}

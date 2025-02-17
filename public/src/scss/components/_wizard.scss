@@ -1,0 +1,286 @@
+// Wizard
+
+.wizard {
+  .steps {
+    padding: $card-spacer-y $card-spacer-x;
+    border-bottom: $card-border-color solid 1px;
+    background: $secondary;
+
+    ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: block;
+        width: auto;
+        position: relative;
+        padding: 0 ($spacer * 2) 0 0;
+
+        a {
+          justify-content: flex-start;
+          align-items: center;
+          display: flex;
+
+          .number {
+            width: 38px;
+            height: 38px;
+            background: transparent;
+            border: $gray-700 solid 2px;
+            color: $gray-700;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            justify-content: center;
+            flex-shrink: 0;
+            @include border-radius(100%);
+            transition: $transition-base;
+            position: relative;
+          }
+
+          .title {
+            padding: 0 ($spacer / 1.5);
+            color: $gray-700;
+            transition: $transition-base;
+          }
+
+          &:hover {
+            .number {
+              color: $gray-800;
+              border-color: $gray-800;
+            }
+
+            .title {
+              color: $gray-800;
+            }
+          }
+        }
+
+        .current-info {
+          display: none;
+        }
+
+        &:after {
+          content: '\f061';
+          font-family: 'Font Awesome 5 Free';
+          font-weight: 900;
+          color: $gray-500;
+          position: absolute;
+          top: 51%;
+          right: ($spacer / 1.1);
+          line-height: 0;
+          display: block;
+        }
+
+        &.current {
+          a {
+            .number {
+              background: $primary;
+              border-color: $primary;
+              color: $white;
+            }
+
+            .title {
+              color: $primary;
+            }
+          }
+        }
+
+        &.done {
+          a {
+            .number {
+              background: $success;
+              color: $white;
+              border-color: $success;
+            }
+
+            .title {
+              color: $success;
+            }
+          }
+        }
+
+        &.last {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: $card-spacer-x;
+
+    .title {
+      display: none;
+      font-size: $font-size-lg;
+      margin: 0;
+
+      &.current {
+        display: block;
+      }
+    }
+  }
+
+  .actions {
+    border-top: $card-border-color solid 1px;
+    padding: $card-spacer-y $card-spacer-x;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+
+      li {
+
+        a {
+          background: $primary;
+          color: $white;
+          transition: all .2s ease-out;
+          @include border-radius($border-radius-xs);
+          box-shadow: 0 0.25rem 0.55rem rgba($primary, .35);
+          display: inline-block;
+          font-family: $btn-font-family;
+          font-weight: $btn-font-weight;
+          text-align: center;
+          vertical-align: middle;
+          user-select: none;
+          padding: $btn-padding-y $btn-padding-x;
+
+          &:hover {
+            transform: translateY(-2px);
+          }
+        }
+
+        &.disabled {
+          a {
+            background: $gray-200;
+            color: $gray-700;
+            cursor: not-allowed;
+            box-shadow: 0 0 0 transparent;
+
+            &:hover {
+              transform: translateY(0);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Vertical wizard
+
+.vertical {
+  background: $secondary;
+  @include border-bottom-radius($card-border-radius);
+
+  .steps {
+    width: 30%;
+    float: left;
+    border-bottom: 0;
+    @include border-bottom-left-radius($card-border-radius);
+
+    ul {
+      flex-direction: column;
+
+      li {
+        padding: 0 0 ($spacer * 1.5);
+
+        &:after {
+          display: none;
+        }
+
+        a .number {
+          &:after {
+            content: '';
+            background: $gray-400;
+            width: 2px;
+            @include border-radius($border-radius-lg);
+            height: 16px;
+            display: block;
+            position: absolute;
+            bottom: -$spacer;
+            left: 50%;
+            margin-left: -1px;
+            top: 115%;
+          }
+        }
+
+        &.last {
+          a .number {
+            &:after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    width: 70%;
+    border-left: $card-border-color solid 1px;
+    float: right;
+    background: $white;
+  }
+
+  .actions {
+    background: $white;
+    width: 70%;
+    border-left: $card-border-color solid 1px;
+    float: right;
+    @include border-bottom-right-radius($card-border-radius);
+  }
+}
+
+// Responsive
+
+@include media-breakpoint-down(sm) {
+  .wizard .steps ul {
+    display: block;
+
+    li {
+      padding: 0 0 ($spacer * 2) 0;
+
+      &:after {
+        transform: rotate(90deg);
+        right: auto;
+        left: 11px;
+        bottom: ($spacer / 1.1);
+        top: auto;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  .vertical {
+    .actions,
+    .content {
+      border-left: 0;
+      float: none;
+      width: 100%;
+    }
+
+    .steps {
+      width: auto;
+      background: $white;
+      float: none;
+      @include border-radius($border-radius);
+      border: $card-border-color solid 1px;
+      padding: $spacer;
+      margin: $spacer;
+
+      ul li a .number:after {
+        height: 26px;
+      }
+    }
+  }
+}

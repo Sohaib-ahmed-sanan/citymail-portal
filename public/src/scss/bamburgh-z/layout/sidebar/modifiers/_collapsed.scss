@@ -1,0 +1,89 @@
+// Sidebar collapsed
+@include media-breakpoint-up(lg) {
+  .sidebar-collapsed {
+    .app-sidebar {
+      width: $sidebar-width-collapsed;
+
+      .metismenu .mm-collapse.mm-show {
+        opacity: 0;
+        visibility: hidden;
+        height: 0;
+        overflow: hidden;
+      }
+
+      .sidebar-header {
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .sidebar-navigation {
+        ul {
+          a {
+            span {
+              span {
+                transform: translate3d(-25px, 0, 0);
+                opacity: 0;
+              }
+            }
+          }
+        }
+      }
+
+      &--footer {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      &:hover {
+        width: $sidebar-width;
+
+        .metismenu .mm-collapse.mm-show {
+          opacity: 1;
+          visibility: visible;
+          height: initial;
+        }
+
+        .sidebar-navigation {
+          ul {
+            a {
+              span {
+                span {
+                  transform: translate3d(0px, 0, 0);
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+
+        .sidebar-header {
+          height: initial;
+          padding: $spacer;
+          overflow: auto;
+        }
+
+        .app-sidebar--footer {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .app-sidebar--header {
+          .toggle-sidebar {
+            visibility: visible;
+            opacity: 1;
+            overflow: initial;
+          }
+        }
+      }
+    }
+
+    .app-content {
+      padding-left: $sidebar-width-collapsed;
+    }
+
+    .app-header {
+      left: $sidebar-width-collapsed;
+    }
+  }
+}

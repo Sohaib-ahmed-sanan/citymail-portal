@@ -1,0 +1,231 @@
+// Sidebar
+
+.app-sidebar {
+  width: $sidebar-width;
+  background: $sidebar-bg;
+  flex-direction: column;
+  display: flex;
+  position: fixed;
+  height: 100%;
+  transition: width 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  z-index: 11;
+
+  &--header {
+    background: $sidebar-header-bg;
+    padding: 0;
+    min-height: $header-height;
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    &:after {
+      content: "";
+      width: 90%;
+      left: 5%;
+      bottom: 0;
+      height: 1px;
+      position: absolute;
+    }
+
+    .toggle-sidebar {
+      visibility: hidden;
+      opacity: 0;
+      transition: $transition-base;
+      position: absolute;
+      right: 0;
+      width: 36px;
+      height: 36px;
+      line-height: 34px;
+      border: $header-bg solid 2px;
+      margin: -18px -18px 0 0;
+      top: 50%;
+      padding: 0;
+    }
+  }
+
+  &--content {
+    background: $sidebar-content-bg;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .sidebar-header {
+      text-transform: uppercase;
+      font-size: ($font-size-xs / 1.2);
+      padding: $spacer;
+      height: initial;
+      overflow: auto;
+      transition: $transition-base;
+    }
+  }
+
+  &--footer {
+    height: $footer-height;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    padding: 0;
+    transition: $transition-base;
+  }
+}
+
+// Metis Menu
+
+.metismenu .mm-collapse:not(.mm-show) {
+  display: none;
+}
+
+.metismenu .mm-collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition-timing-function: ease;
+  transition-duration: .35s;
+  transition-property: height, visibility;
+}
+
+.metismenu .has-arrow {
+  position: relative;
+}
+
+// Sidebar navigation
+
+.sidebar-navigation {
+  ul {
+    @include list-unstyled;
+    display: flex;
+    flex-direction: column;
+
+    & > li {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding: 1px 0;
+
+      &.mm-active {
+        .fa-angle-right {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    ul {
+      li {
+        padding: 0 ($layout-spacer);
+
+        &:first-child {
+          margin-top: $layout-spacer / 2;
+        }
+
+        &:last-child {
+          margin-bottom: $layout-spacer / 2;
+        }
+
+        a {
+          @include border-radius($border-radius);
+          height: $navlink-inner-height;
+          font-size: $font-size-xs / 1.12;
+          position: relative;
+          margin: 1px 0;
+          white-space: nowrap;
+
+          &:after {
+            content: "";
+            left: 14px;
+            transition: $transition-base;
+            width: 8px;
+            height: 8px;
+            top: 50%;
+            position: absolute;
+            margin: -4px 0 0 -4px;
+            opacity: 1;
+            @include border-radius($border-radius-lg);
+          }
+
+          &:hover {
+            &:after {
+              left: -2px;
+              opacity: 0;
+            }
+          }
+        }
+      }
+
+      li.mm-active {
+        a:after {
+          left: -2px;
+          background: rgba($black,.5);
+          opacity: 0;
+        }
+      }
+    }
+
+    a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      height: $navlink-height;
+      padding: 0 $layout-spacer;
+      transition: background .3s ease-out;
+      justify-content: space-between;
+      font-size: $font-size-xs / 1.1;
+
+      .fa-angle-right {
+        transform: rotate(0deg);
+        transition: $transition-base;
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+
+        span {
+          white-space: nowrap;
+          transform: translate3d(0px, 0, 0);
+          transition: $transition-base;
+        }
+      }
+
+      svg {
+        margin-right: ($spacer);
+        width: 24px;
+        height: 24px;
+        transition: $transition-base;
+      }
+
+    }
+
+    .fade.mm-collapse.mm-show {
+      opacity: 1;
+    }
+  }
+}
+
+// Responsive
+
+@include media-breakpoint-down(md) {
+  .app-sidebar {
+    transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    left: -$sidebar-width;
+  }
+
+  .sidebar-open-mobile {
+    .app-sidebar {
+      left: 0;
+      transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+      box-shadow: $box-shadow;
+    }
+  }
+}
+
+// Modifiers
+
+@import "./sidebar/modifiers/collapsed";
+@import "./sidebar/modifiers/mini";
+
+// Themes
+
+@import "./sidebar/themes/light";
+@import "./sidebar/themes/dark";

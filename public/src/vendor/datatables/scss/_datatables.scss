@@ -1,0 +1,68 @@
+// Datatables
+
+.card-box {
+  & > .dt-bootstrap4 {
+
+    .dataTable {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+
+      tbody th.focus,
+      tbody td.focus {
+        outline: none !important;
+        box-shadow: inset 0 0 1px 2px $primary !important;
+        @include border-radius($border-radius-sm);
+        border-color: $primary;
+      }
+    }
+
+    .dataTables_info {
+      padding: ($spacer / 2) $spacer !important;
+      font-size: $font-size-sm;
+    }
+
+    .dt-buttons,
+    .dataTables_filter {
+      padding: ($spacer / 2) $spacer;
+    }
+
+    .dataTables_filter,
+    .dataTables_paginate {
+      width: 100%;
+    }
+
+    .dataTables_length,
+    .dataTables_filter {
+      label {
+        margin: 0;
+      }
+    }
+
+    .dataTables_length,
+    .dataTables_paginate {
+      padding: $spacer ($spacer / 2);
+    }
+
+    .dt-buttons {
+
+      .btn-secondary {
+        box-shadow: 0 0 0 transparent;
+        background: $primary;
+        color: $white;
+        padding: $btn-padding-y-sm $btn-padding-x-sm;
+        font-size: $btn-font-size-sm;
+        border: 0;
+
+        &:hover {
+          background: darken($primary, 5%);
+        }
+
+        &:active,
+        &:focus {
+          background: $primary !important;
+          outline: none !important;
+        }
+      }
+    }
+  }
+}
