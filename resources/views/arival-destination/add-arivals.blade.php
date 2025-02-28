@@ -8,7 +8,7 @@
                     <div class="col-xl-6">
                         <div>
                             <h5 class="title-text mb-1">{{ $title }}</h5>
-                             <p class="sub-title-text mb-0">Add {{ strtolower($title) }} by filling the form below</p>
+                             <p class="sub-title-text mb-0">{{ ucfirst(strtolower($title)) }} by filling the form below</p>
                         </div>
                     </div>
                     <div class="col-xl-6 d-flex align-items-center justify-content-start mt-xl-0 justify-content-xl-end">
@@ -26,7 +26,7 @@
             <div class="card card-box mb-3">
                 <div class="card-header">
                     <div class="card-header--title">
-                        <b>List of {{ strtolower($title) }}</b>
+                        <b>List of scaned shipments</b>
                     </div>
                 </div>
                 <div class="order-filter-wrapper p-3 mb-3 border-bottom">
@@ -74,26 +74,12 @@
                                     class="form-control form-control-lg number" id="shipment_no" name="shipment_no"
                                     placeholder="Enter Consignment No" value="" required="true">
                             </div>
-                            {{-- <div class="d-flex col-md-3">
-                                <div class="wp-col col-md-6 mt-2 d-none">
-                                    <label for="shipment_no">Peices<span class="req">*</span></label>
-                                    <input class="form-control form-control-lg number" id="peices-first"
-                                        data-parsley-validate="number" placeholder="Enter Peices" required="true"
-                                        minlength="1" maxlength="5">
-                                </div>
-                                <div class="wp-col col-md-6 mt-2 d-none">
-                                    <label for="shipment_no">Weight<span class="req">*</span></label>
-                                    <input data-parsley-validate="number" class="form-control form-control-lg float"
-                                        minlength="1" maxlength="5" id="weight-first" name=""
-                                        placeholder="Enter Weight" value="" required="true">
-                                </div>
-                            </div> --}}
                             <div class="col-md-3 mt-3">
                                 <button type="button" class="d-none btn btn-secondary-orio mx-2 my-3 float-right"
                                     id="search-btn">Search</button>
                             </div>
                             <div class="col-md-3 mt-3">
-                                <button type="button" class="d-none btn btn-secondary-orio mx-2 my-3 float-right"
+                                <button type="button" class="d-none btn btn-orio mx-2 my-3 float-right"
                                     id="save-btn">Save</button>
                             </div>
                         </div>

@@ -371,52 +371,11 @@ let getRowValue = (row, selector, inputName) => {
     }
 }
 
-// let get_existing_shipper = (input) => {
-//     var shipper_phone = input.value
-//     if(shipper_phone.length > 10){
-//         $.ajax({
-//             url: BASEURL+'get-existing-shipper',
-//             type: "POST",
-//             data: {
-//                 phone:shipper_phone
-//             },
-//             success: function (result) {
-//                if(result.status == 1){
-//                 $('#sender_name').val(result.payload.shipper_name).prop('readonly', true);
-//                 $('#sender_email').val(result.payload.shipper_email).prop('readonly', true);
-//                 $('#sender_phone').val(result.payload.shipper_phone);
-//                 $('#sender_address').val(result.payload.shipper_address).prop('readonly', true);
-//                 $('#sender_cnic').val(result.payload.shipper_cnic).prop('readonly', true);
-//                 $('#sender_postcode').val(result.payload.shipper_postal_code).prop('readonly', true);                
-//                 if ($('#origin_country_id option[value="' + result.payload.origin_country + '"]').length) {
-//                     $('#origin_country_id')
-//                         .val(result.payload.origin_country)
-//                         .trigger('change')
-//                         .prop('disabled', true);
-//                 }
-//                 window.setTimeout(function () {
-//                     if ($('#origin_city option[value="' + result.payload.origin_city + '"]').length) {
-//                         $('#origin_city')
-//                             .val(result.payload.origin_city)
-//                             .trigger('change')
-//                             .prop('disabled', true);
-//                     }
-//                 }, 1000);
-//                }
-//             },
-//             error: function (xhr, err) {
-//                 var errorMessage = xhr.responseJSON.message;
-//                 console.log(errorMessage);                
-//             }
-//         });
-//     }
-// }
-
 $(document).on('change', '#customer_acno', function () {
     var customer_acno = $(this).val();
     $("#pickup_locations").html('')
     get_pickup(customer_acno);
-    get_service(customer_acno);
+    // get_service(customer_acno);
 })
 
 $(document).on('change', '#sub_account', function () {
@@ -428,10 +387,9 @@ $(document).on('change', '#sub_account', function () {
 
 $(document).ready(function () {
     if (sessionType == '6') {
-        if ($('#pickup_customer_acno').val() != '') {
-            var customer_acno = $('#pickup_customer_acno').val();
+        if ($('#customer_acno').val() != '') {
+            var customer_acno = $('#customer_acno').val();
             get_pickup(customer_acno);
-            get_service(customer_acno);
         }
     }
 })
@@ -457,10 +415,10 @@ let create_pickup = (element,e) => {
         formdata.append("email", originalFormData.get("pickup_email"));
         formdata.append("phone", originalFormData.get("pickup_phone"));
         formdata.append("address", originalFormData.get("pickup_address"));
-        formdata.append("country_id", originalFormData.get("pickup_country_id"));
-        formdata.append("city_id", originalFormData.get("pickup_city_id"));
+        formdata.append("country_id","449");
+        formdata.append("city_id","655");
         formdata.append("customer_acno", originalFormData.get("pickup_customer_acno"));
-
+        
         $.ajax({
             url: storeUrl,
             type: "POST",

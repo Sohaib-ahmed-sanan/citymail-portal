@@ -109,4 +109,5 @@
      var track_route = "{{ Route('admin.tracking_data') }}";
  </script>
  <script src="{{ asset('assets/js/modules-helper.js') }}"></script>
+ 
  @yield('scripts')

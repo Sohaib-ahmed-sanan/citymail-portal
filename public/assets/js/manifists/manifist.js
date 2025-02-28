@@ -8,7 +8,8 @@ let datalist = (params) => {
         value_type,
         spinerType,
     } = params;
-    var title = ""; range = "";
+    var title = "";
+    range = "";
     var start_date = start.format("YYYY-MM-DD");
     var end_date = end.format("YYYY-MM-DD");
 
@@ -26,15 +27,21 @@ let datalist = (params) => {
     }
     var aoColumns = [];
     // Push other columns
-    aoColumns.push(
-        { data: "SNO" },
-        { data: "BATCH" },
-        { data: "SEAL" },
-        { data: "STATION" },
-        { data: "DATE" },
-        { data: "CNCOUNT" },
-        { data: "ACTIONS" }
-    );
+    aoColumns.push({
+        data: "SNO"
+    }, {
+        data: "BATCH"
+    }, {
+        data: "SEAL"
+    }, {
+        data: "STATION"
+    }, {
+        data: "DATE"
+    }, {
+        data: "CNCOUNT"
+    }, {
+        data: "ACTIONS"
+    });
     $("#example").DataTable({
         destroy: true,
         responsive: true,
@@ -75,7 +82,10 @@ let datalist = (params) => {
         searchDelay: 200,
         processing: true,
         serverSide: false,
-        lengthMenu: [[50, 100, 500], [50, 100, 500]],
+        lengthMenu: [
+            [50, 100, 500],
+            [50, 100, 500]
+        ],
         ajax: {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -195,52 +205,68 @@ $(document).on('click', '#save-btn', function (e) {
                 var consignment = $(this).find("td:eq(0)").text().trim();
                 cn_numbers.push(consignment);
             });
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: storeUrl,
-                type: "POST",
-                data: {
-                    'station_id': station_id,
-                    'seal_no': seal_no,
-                    'rider_id': rider_id,
-                    'batch_name': batch_name,
-                    'cn_numbers': cn_numbers,
-                },
-                success: function (result) {
-                    if (result.status == 1) {
-                        swal.fire({
-                            icon: "success",
-                            title: "Manifist sheet no # " + result.payload,
-                            text: result.message,
-                            confirmButtonClass: "btn-success",
-                            type: "success",
-                        });
-                        window.setTimeout(function () {
-                            window.location.href = BASEURL + 'manifists';
-                        }, 2000);
+            swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure you want to generate manifist',
+                type: "question",
+                buttonsStyling: !1,
+                showCancelButton: true,
+                confirmButtonText: 'Yes, create it!',
+                cancelButtonText: 'No, cancel',
+                confirmButtonClass: "btn btn-orio",
+                cancelButtonClass: "btn btn-secondary-orio mx-3"
+            }).then(action => {
+                if (action.value == true) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: storeUrl,
+                        type: "POST",
+                        data: {
+                            'station_id': station_id,
+                            'seal_no': seal_no,
+                            'rider_id': rider_id,
+                            'batch_name': batch_name,
+                            'cn_numbers': cn_numbers,
+                        },
+                        success: function (result) {
+                            if (result.status == 1) {
+                                swal.fire({
+                                    icon: "success",
+                                    title: "Manifist sheet no # " + result.payload.sheet_no,
+                                    text: result.message,
+                                    confirmButtonClass: "btn-success",
+                                    type: "success",
+                                });
+                                window.setTimeout(function () {
+                                    window.location.href = BASEURL + 'manifists';
+                                }, 2000);
 
-                    } else {
-                       destroyLoader('save-btn', title, 'btn-orio')
-                        if (result.payload.error_consignments && result.payload.error_consignments.length > 0) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Manifest sheet no # " + result.payload.sheet_no,
-                                text: result.message + ' ' + result.payload.error_consignments.join(', '),
-                                confirmButtonClass: "btn-success",
-                            });
-                            window.setTimeout(function () {
-                                window.location.href = BASEURL + 'manifists';
-                            }, 2000);
-                        } else {
-                            notify("danger", 'Error', result.message);
-                        }  
-                    }
-                },
-                error: function (xhr, err) {
-                    var errorMessage = xhr.responseJSON.message;
-                    notify("warning", errorMessage);
+                            } else {
+                                if (result.payload.error_consignments && result.payload.error_consignments.length > 0) {
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Manifest sheet no # " + result.payload.sheet_no,
+                                        text: result.message + ' ' + result.payload.error_consignments.join(', '),
+                                        confirmButtonClass: "btn-success",
+                                    });
+                                    window.setTimeout(function () {
+                                        window.location.href = BASEURL + 'manifists';
+                                    }, 2000);
+                                } else {
+                                    notify("danger", 'Error', result.message);
+                                }
+                                
+                            }
+                        },
+                        error: function (xhr, err) {
+                            var errorMessage = xhr.responseJSON.message;
+                            notify("warning", errorMessage);
+                            destroyLoader('save-btn', title, 'btn-orio')
+                        }
+                    });
+                }else{
                     destroyLoader('save-btn', title, 'btn-orio')
                 }
             });
@@ -314,4 +340,3 @@ $(document).on('click', '.rem_row', function () {
 $('#station_id').change(function () {
     $('#update-btn').removeClass('d-none')
 })
-

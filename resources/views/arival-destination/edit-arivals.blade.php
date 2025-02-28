@@ -7,7 +7,7 @@
                     <div class="col-xl-6">
                         <div>
                             <h5 class="title-text mb-1">{{ $title }}</h5>
-                             <p class="sub-title-text mb-0">Add {{ strtolower($title) }} by filling the form below</p>
+                             <p class="sub-title-text mb-0">{{ ucfirst(strtolower($title)) }} by filling the form below</p>
                         </div>
                     </div>
                 </div>
@@ -15,7 +15,7 @@
             <div class="card card-box mb-3">
                 <div class="card-header">
                     <div class="card-header--title">
-                        <b>List of {{ strtolower($title) }}</b>
+                        <b>List of scaned shipments</b>
                     </div>
                 </div>
                 <div class="card-body">

@@ -122,13 +122,13 @@
                 <table id="example" class="example2 display nowrap table table-hover" width="100%">
                     <thead class="thead">
                         <tr>
-                            <th width="20">
+                            <th class="d-flex align-items-center justify-content-center">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check_all">
+                                    <input type="checkbox"class="custom-control-input" id="check_all">
                                     <label class="custom-control-label" for="check_all"></label>
                                 </div>
+                                SNO
                             </th>
-                            <th>SNO</th>
                             <th>DATE</th>
                             <th>PICKUP LOCATION</th>
                             <th>CITY</th>
@@ -145,6 +145,7 @@
                 var listRoute = "{{ Route('admin.pickups') }}";
             </script>
         @section('scripts')
+            <script src="{{ asset('assets/js/datatable-helper.js') }}"></script>
             <script src="{{ asset('assets/js/driver-assign/driver-assign.js') }}"></script>
         @endsection
 

@@ -464,7 +464,6 @@ $(document).on('keyup', '.charges_inp', function () {
 const count_total = () => {
     let totalRows = totalCod = totalServiceCharges = totalRtoCharges = totalHandling = totalGST = totalSST = totalBAC = 0;
     totalRows = $('.invoiceTabel tbody tr').length;
-
     $('.invoiceTabel tbody tr').each(function () {
         totalCod += parseFloat($(this).find('td.totalCod').text()) || 0;
         totalServiceCharges += parseFloat($(this).find('td').find('input[name="service_charges[]"]').val()) || 0;

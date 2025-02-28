@@ -8,7 +8,8 @@ if (page_type == 'list') {
             value_type,
             spinerType,
         } = params;
-        var title = ""; range = "";
+        var title = "";
+        range = "";
         var start_date = start.format("YYYY-MM-DD");
         var end_date = end.format("YYYY-MM-DD");
 
@@ -26,13 +27,17 @@ if (page_type == 'list') {
         }
         var aoColumns = [];
         // Push other columns
-        aoColumns.push(
-            { data: "SNO" },
-            { data: "SHEET" },
-            { data: "DATE" },
-            { data: "CNCOUNT" },
-            { data: "ACTION" }
-        );
+        aoColumns.push({
+            data: "SNO"
+        }, {
+            data: "SHEET"
+        }, {
+            data: "DATE"
+        }, {
+            data: "CNCOUNT"
+        }, {
+            data: "ACTION"
+        });
         $("#example").DataTable({
             destroy: true,
             responsive: true,
@@ -139,24 +144,24 @@ $('#shipment_no').on('input', function () {
         if (!consignmentExists) {
             var rowCount = $('#arrival_list tr').length;
             // if (rowCount <= 90) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: BASEURL + 'fetch-arrival-cn',
-                    type: "POST",
-                    data: {
-                        shipment_no: shipment_no,
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                    },
-                    success: function (result) {
-                        append_data(result)
-                    },
-                    error: function (xhr, err) {
-                        var errorMessage = xhr.responseJSON.message;
-                        notify("warning", errorMessage);
-                    }
-                });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: BASEURL + 'fetch-arrival-cn',
+                type: "POST",
+                data: {
+                    shipment_no: shipment_no,
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function (result) {
+                    append_data(result)
+                },
+                error: function (xhr, err) {
+                    var errorMessage = xhr.responseJSON.message;
+                    notify("warning", errorMessage);
+                }
+            });
             // } else {
             //     notify("warning", "Maximum limit exceded !");
             // }
@@ -185,29 +190,26 @@ $(document).on('click', '#save-btn', function () {
         var service_id = $(this).find("td.service").text().trim();
         var customer_acno = $(this).find("td.customer_acno").text().trim();
 
-        tabel_data.push(
-            {
-                "cn_number": consignment,
-                "weight": weight,
-                "peices": peices,
-                "origin": origin_city,
-                "destination": destination_city,
-                "cod_amt": cod_amt,
-                "service_id": service_id,
-                "customer_acno": customer_acno,
-            }
-        );
+        tabel_data.push({
+            "cn_number": consignment,
+            "weight": weight,
+            "peices": peices,
+            "origin": origin_city,
+            "destination": destination_city,
+            "cod_amt": cod_amt,
+            "service_id": service_id,
+            "customer_acno": customer_acno,
+        });
     });
 
     var title = $(this).html()
-    initLoader('save-btn', title, 'btn-secondary-orio');
     var rider_id = $('#riders_id').val();
     var route_id = $('#route_id').val();
     var station_id = $('#station_id').val();
     if (rider_id != '' && station_id != '' && route_id != '') {
         swal.fire({
             title: 'Confirmation',
-            text: 'Are yu sure you want to generate arrival',
+            text: 'Are you sure you want to generate arrival',
             type: "question",
             buttonsStyling: !1,
             showCancelButton: true,
@@ -215,45 +217,49 @@ $(document).on('click', '#save-btn', function () {
             cancelButtonText: 'No, cancel',
             confirmButtonClass: "btn btn-orio",
             cancelButtonClass: "btn btn-secondary-orio mx-3"
-        }).then(t => {
-            t.value && $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: BASEURL + 'insert-arrival',
-                type: "POST",
-                data: {
-                    'rider_id': rider_id,
-                    'route_id': route_id,
-                    'station_id': station_id,
-                    'arrival_type': '0',
-                    'data': tabel_data
-                },
-                success: function (result) {
-                    if (result.status == 1) {
-                        swal.fire({
-                            icon: "success",
-                            title: "Arrival sheet no # " + result.sheet_no,
-                            text: result.message,
-                            confirmButtonClass: "btn-success",
-                            type: "success",
-                        });
-                        window.setTimeout(function () {
-                            window.location.href = BASEURL + 'arrivals';
-                        }, 3000);
-                    } else {
-                        destroyLoader('save-btn', title, 'btn btn-secondary-orio')
-                        notify("danger", 'Error', result.message);
+        }).then(action => {
+            if (action.value == true) {
+                initLoader('save-btn', title, 'btn-orio');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: BASEURL + 'insert-arrival',
+                    type: "POST",
+                    data: {
+                        'rider_id': rider_id,
+                        'route_id': route_id,
+                        'station_id': station_id,
+                        'arrival_type': '0',
+                        'data': tabel_data
+                    },
+                    success: function (result) {
+                        if (result.status == 1) {
+                            swal.fire({
+                                icon: "success",
+                                title: "Arrival sheet no # " + result.sheet_no,
+                                text: result.message,
+                                confirmButtonClass: "btn-success",
+                                type: "success",
+                            });
+                            window.setTimeout(function () {
+                                window.location.href = BASEURL + 'arrivals';
+                            }, 3000);
+                        } else {
+                            destroyLoader('save-btn', title, 'btn-orio')
+                            notify("danger", 'Error', result.message);
+                        }
+                    },
+                    error: function (xhr, err) {
+                        var errorMessage = xhr.responseJSON.message;
+                        notify("danger", errorMessage);
+                        destroyLoader('save-btn', title, 'btn-orio')
                     }
-                },
-                error: function (xhr, err) {
-                    var errorMessage = xhr.responseJSON.message;
-                    notify("danger", errorMessage);
-                    destroyLoader('save-btn', title, 'btn btn-secondary-orio')
-                }
-            });
+                });
+            }else{
+                destroyLoader('save-btn', title, 'btn-orio')
+            }
         });
-        destroyLoader('save-btn', title, 'btn btn-secondary-orio')
     } else {
         notify("danger", "Error", "Please select all feilds");
     }
@@ -263,7 +269,6 @@ $(document).on('click', '#save-btn', function () {
 // to remove the cn 
 $(document).on('click', '.rem_row', function () {
     $(this).closest('tr').remove();
-
     if ($('#arrival_list tr').length === 0) {
         $("#save-btn").addClass('d-none');
     }
@@ -315,14 +320,12 @@ $('#update_sheet').click(function (e) {
 });
 
 
-$(document).on('keydown', function(event) {
-    // Check if the key pressed is "Enter" (key code 13)
+$(document).on('keydown', function (event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
         event.preventDefault(); // Prevent form submission
         return false; // Block the default behavior
     }
 });
-
 
 $(document).on('click', '#import_btn', function (e) {
     var forms = $("#bulk_excel_form");

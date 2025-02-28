@@ -1,38 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\authController;
-
 use App\Http\Controllers\adminController;
-
 use App\Http\Controllers\printController;
-
 use App\Http\Controllers\commonController;
-
 use App\Http\Controllers\arrivalController;
-
 use App\Http\Controllers\bookingController;
-
 use App\Http\Controllers\invoiceController;
-
 use App\Http\Controllers\profileController;
-
 use App\Http\Controllers\reportsController;
-
 use App\Http\Controllers\customerController;
-
 use App\Http\Controllers\operationsController;
-
 use App\Http\Controllers\thirdPartyController;
-
 use App\Http\Controllers\ArrivalDestinationController;
 use App\Http\Controllers\expressShipmentsController;
+use App\Http\Controllers\internationalTarrifController;
 
 // register/login route
-
 Route::middleware('guest_check')
     ->controller(authController::class)
     ->group(function () {
@@ -180,93 +166,59 @@ Route::middleware('LoginCheck')->group(function () {
     Route::controller(operationsController::class)->group(function () {
         Route::middleware('company_check')->group(function () {
             Route::match(['get', 'post'], '/assign-driver', 'assign_driver')->name('admin.pickups');
-
             Route::post('/list-assign-driver', 'list_pickups')->name('admin.list_pickups');
-
             Route::post('/generate-assign-driver', 'generate_assign_driver')->name('admin.generate_pickup');
-
             // manifist route
-
             Route::match(['get', 'post'], '/manifists', 'manifists')->name('admin.manifist');
-
             // for add add edit purpose
-
             Route::match(['get', 'post'], 'add_edit_manifist/{id?}', 'add_edit_manifist')->name('admin.add_edit_manifist');
-
             // for fetching data through ajax
-
             Route::post('/fetch-manifist-data', 'fetch_manifist_data')->name('admin.fetch_data');
-
             // de-manifist
-
             Route::match(['get', 'post'], '/de-manifists', 'de_manifists')->name('admin.de-manifist');
-
             // for add add edit purpose
-
             Route::match(['get', 'post'], 'add_de_manifist/{id?}', 'add_edit_de_manifist')->name('admin.add_edit_de_manifist');
-
             // for fetching data
-
             Route::post('/fetch-demanifist-data', 'fetch_demanifest_data')->name('admin.de-fetch_data');
-
             // delivery sheet route
-
             Route::match(['get', 'post'], '/delivery-sheet', 'delivery_sheet')->name('admin.delivery_sheet');
-
             // for add edit purpose
-
             Route::match(['get', 'post'], 'add-edit-delivery-sheet/{id?}', 'add_edit_deliverySheet')->name('admin.add_edit_deliverySheet');
-
             Route::post('/fetch-delivery-data', 'fetch_delivery_data')->name('admin.delivery_data');
-
             // couriers
-
             Route::match(['get', 'post'], '/couriers', 'couriers')->name('admin.couriers');
-
             Route::match(['get', 'post'], 'add_edit_couriers/{id?}', 'add_edit_couriers')->name('admin.add_edit_couriers');
-
             Route::post('add-edit-courier-code/{id?}', 'add_edit_courier_code')->name('admin.add_edit_courier_code');
         });
-
         // tracking
-
         Route::get('/tracking', 'tracking')->name('admin.tracking');
-
         Route::post('/get-tracking-data', 'get_tracking_data')->name('admin.tracking_data');
-
         // loadsheets
-
         Route::match(['get', 'post'], '/loadsheets', 'loadsheets')->name('admin.loadSheeet');
-
         Route::post('/generate-loadsheet', 'create_loadsheet')->name('admin.generate_loadsheet');
-
         // ops subuser
-
         // list sub users
-
         Route::match(['get', 'post'], 'list-subusers', 'sub_users')->name('ops.sub-users');
-
         Route::match(['get', 'post'], 'add-edit-subuser/{id?}', 'add_edit_sub_user')->name('ops.add-edit-sub-users');
-
         // shipper advice
-
         Route::match(['get', 'post'], '/shipper-advice', 'shipper_advice')->name('admin.shipper_advice');
-
         Route::post('/chats-shipper-advice', 'chats_shipper_advice')->name('admin.chats_shipper_advice');
-
         Route::post('/store-shipper-advice', 'store_shipper_advice')->name('admin.store_shipper_advice');
         Route::match(['get', 'post'], 'city-list', 'city_list')->name("admin.city-list");
     });
-    
     Route::controller(expressShipmentsController::class)->group(function () {
-        Route::middleware('company_check')->group(function () {
             Route::match(['get', 'post'], 'express-shipments', 'express_shipments')->name('admin.express-shipments');
             Route::match(['get', 'post'], 'add-edit-express-shipment/{id?}', 'add_edit_express_shipments')->name('admin.add_edit-express-shipments');
             Route::post('store-express-shipment/{id?}', 'store_express_shipments')->name('admin.store-express-shipments');
             Route::post('get-existing-shipper', 'get_existing_shipper')->name('admin.get-existing-shipper');
             Route::post('add-walkin-customer', 'add_walkin_customer')->name('admin.add-walkin-customer');
             Route::post('get-walkin-customer', 'get_walkin_customer')->name('admin.get-walkin-customer');
-        });
+    });
+    Route::controller(internationalTarrifController::class)->group(function () {
+            Route::match(['get', 'post'], 'international-tarrifs', 'international_tarrifs')->name('admin.international-tarrifs');
+            Route::match(['get', 'post'], 'view-international-tarrif/{id?}', 'view_international_tarrif')->name('admin.view-international-tarrif');
+            Route::post('add-international-charges', 'add_international_charges')->name('admin.add-international-charges');
+            Route::post('update-international-charges', 'update_international_charges')->name('admin.update-international-charges');
     });
     
     // invoice controller
@@ -313,7 +265,7 @@ Route::middleware('LoginCheck')->group(function () {
         Route::get('/manifist-sheet-pdf/{id}', 'manifist')->name('admin.manifistsheet-pdf')->middleware('company_check');
         Route::get('/de-manifist-sheet-pdf/{id}', 'de_manifist')->name('admin.de-manifistsheet-pdf')->middleware('company_check');
         Route::get('/delivery-sheet-pdf/{id}', 'delivery_sheet')->name('admin.dileverySheetPDF')->middleware('company_check');
-        Route::get('/proforma-invoice-pdf/{id}', 'proforma_invoice')->name('admin.proforma-invoice')->middleware('company_check');
+        Route::get('/proforma-invoice-pdf/{id}', 'proforma_invoice')->name('admin.proforma-invoice');
     });
     // all reports
     Route::controller(reportsController::class)->group(function () {
@@ -349,6 +301,7 @@ Route::middleware('LoginCheck')->group(function () {
         Route::post('/ajax_testing', 'ajax_testing')->name('ajax_testing');
         Route::post('/get-stations', 'get_stations');
         Route::post("/get-courier-city", "get_courier_city")->name("admin.get-courier-city");
+        Route::post("/add-city", "add_city")->name("admin.add_city");
     });
 });
 
@@ -359,4 +312,7 @@ Route::get('/airway-pdf/{id}', [printController::class,'airway_bill'])->name('ad
 
 Route::get('get-ip', function (Request $request) {
     return $request->ip();
+});
+Route::get('test', function (Request $request) {
+    return view('test');
 });

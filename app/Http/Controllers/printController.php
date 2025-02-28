@@ -932,11 +932,13 @@ class printController extends Controller
                 $pdf::Cell(35.5, 5, 'Cash Collect Barcode', 1, 0, '', 1, '', 0, false, 'T', 'C');
                 $pdf::Cell(81.4, 4.8, 'Consignee Details', 1, 0, '', 1, '', 0, false, 'T', 'C');
                 $pdf::ln(4);
-                $pdf::SetFont('helvetica', '', 8);
+                // 
+                $pdf::SetFont('aealarabiya', 'B', 8);
                 $pdf::ln(1);
                 $pdf::MultiCell(73.6, 20, $r->shipper_name . "  /  " . $r->shipper_phone . "   /   " . $r->origin_city . "   /   " . $r->shipper_address, 'RL', 'L', 1, 0, '', '', true);
                 $pdf::write1DBarcode($r->orignal_currency_code, 'C128A', 81.8, '', 35, 19, 0.4, $style, 'C');
-                $pdf::MultiCell(81.5, 26, $r->consignee_name . "  /  " . $r->consignee_phone . "   /   " . $r->destination_city . "   /   " . $r->consignee_address, 'RL', 'L', 1, 0, 117, '', true);
+                // $pdf::MultiCell(81.5, 26, $r->consignee_name . "  /  " . $r->consignee_phone . "   /   " . $r->destination_city . "   /   " . $r->consignee_address, 'RL', 'L', 1, 0, 117, '', true);
+                $pdf::MultiCell(81.5, 26, $r->consignee_name . " / " . $r->consignee_phone . " / " . $r->destination_city . " / " . $r->consignee_address, 'RL', 'R', 1, 0, 117, '', true);
                 $pdf::ln(19);
                 $pdf::SetFont('helvetica', 'B', 8);
                 $pdf::Cell(25, 5, 'Weight', 1, 0, 'L', 1, '', 0, false, 'T', 'C');
@@ -955,19 +957,18 @@ class printController extends Controller
                 $pdf::Cell(35.29, 5, $service_type??'' , 1, 0, 'L', 1, '', 0, false, 'T', 'C');
                 $pdf::SetFont('helvetica', '', 8);
                 $pdf::Cell(81.6, 5, $r->shipment_referance, 1, 0, 'L', 1, '', 0, false, 'T', 'C');
-                // $pdf::Cell(32.5, 5, $r['allow_to_open'], 1, 0, 'L', 1, '', 0, false, 'T', 'C');
                 $pdf::ln(5);
                 // if ($r['tpcode']=='LEO') {
                 $pdf::SetFont('helvetica', 'B', 8);
                 $pdf::Cell(190.5, 5, 'Product Detail', 1, 0, 'L', 1, '', 0, false, 'T', 'C');
                 $pdf::ln(5);
-                $pdf::SetFont('helvetica', '', 8);
+                $pdf::SetFont('aealarabiya', 'B', 8);
                 $pdf::MultiCell(190.5, 25, $product_detail, 'LR', 'L', 1, 0, '', '', true);
                 $pdf::ln(15);
                 $pdf::SetFont('helvetica', 'B', 8);
                 $pdf::Cell(190.5, 5, 'Remarks', 1, 0, 'L', 1, '', 0, false, 'T', 'C');
                 $pdf::ln(5);
-                $pdf::SetFont('helvetica', '', 8);
+                $pdf::SetFont('aealarabiya', 'B', 8);
                 $pdf::Cell(190.5, 5, $r->shipper_comment, 1, 0, 'L', 1, '', 0, false, 'T', 'C');
                 $pdf::ln(10);
                 // $pdf::Cell(80, 5, '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', 10, 0, 'L', 1, '', 0, false, 'T', 'C');
@@ -1137,7 +1138,6 @@ class printController extends Controller
         $result = getAPIdata('shipment/getData', $data);
         if ($result->status == 1) {
             $payload = $result->payload[0];
-            // dd($result->payload[0]);
             $pdf = $this->tc_init('Proforma Invoice');
             if (session('company_logo') == 'orio-logo.svg') {
                 $pdf::Image(asset('images/default/svg/orio-logo.png'), 7, 8, 40);
@@ -1238,11 +1238,10 @@ class printController extends Controller
 
             $pdf::setCellPadding(0);
             return $this->output($pdf);
-
-        } else {
-            return redirect()->back();
         }
-        // dd($arrivals);
+        // } else {
+        //     return redirect()->back();
+        // }
 
     }
 }

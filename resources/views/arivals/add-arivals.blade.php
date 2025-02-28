@@ -7,7 +7,7 @@
                     <div class="col-xl-6">
                          <div>
                             <h5 class="title-text mb-1">{{ $title }}</h5>
-                             <p class="sub-title-text mb-0">Add {{ strtolower($title) }} by filling the form below</p>
+                             <p class="sub-title-text mb-0">{{ ucfirst(strtolower($title)) }} by filling the form below</p>
                         </div>
                     </div>
                     <div class="col-xl-6 d-flex align-items-center justify-content-start mt-xl-0 justify-content-xl-end">
@@ -19,7 +19,7 @@
             <div class="card card-box mb-3">
                 <div class="card-header">
                     <div class="card-header--title">
-                        <b>List of {{ strtolower($title) }}</b>
+                        <b>List of scaned shipments</b>
                     </div>
                 </div>
                 <div class="order-filter-wrapper p-3 mb-3 border-bottom">
@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-md-12 mt-3">
                                     <button type="button"
-                                        class="d-none btn btn-secondary-orio mx-2 my-3 float-right" id="save-btn">Save</button>
+                                        class="d-none btn btn-orio mx-2 my-3 float-right" id="save-btn">Save</button>
                             </div>
                         </div>
                     </form>

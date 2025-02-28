@@ -57,6 +57,7 @@
                 var listRoute = "{{ Route('admin.arivals') }}";
             </script>
         @section('scripts')
+            <script src="{{ asset('assets/js/datatable-helper.js') }}"></script>
              <script src="{{ asset('assets/js/arrivals/arrivals.js') }}"></script>
         @endsection
 

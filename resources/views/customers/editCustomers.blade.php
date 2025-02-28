@@ -5,23 +5,14 @@
     @endphp
     {{-- Add tarif modal --}}
     <div class="modal fade" id="add_tariff_modal" role="dialog" aria-labelledby="editsucessModal" aria-hidden="true">
-
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-
             <div class="modal-content">
-
                 <div class="modal-header">
-
                     <h6 class="modal-title" id="modal-title-default">Add Tariff</h6>
-
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
                         <span aria-hidden="true">×</span>
-
                     </button>
-
                 </div>
-
                 <div class="modal-body">
 
                     <div class="row">
@@ -232,17 +223,16 @@
                                     </div>
 
                                     <div class="col-md-3 mt-4">
-
                                         <button type="button" data-count="1" data-type="tarrif"
-
                                             data-form_id="#tariff_details" class="float-right btn btn-orio btn-sm add_more_info"
-
-                                            style="min-width: 10px !important">+</button>
-
+                                            style="min-width: 10px !important">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1.5 10H18.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                <path d="M10 18.5V1.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                            </svg>
+                                        </button>
                                     </div>
-
                                 </div>
-
                             </form>
 
                             <table class="example2 display nowrap table table-hover mt-4" width="100%">
@@ -311,29 +301,17 @@
     </div>
     {{--  add_handling_modal --}}
     <div class="modal fade" id="add_handling_modal" role="dialog" aria-labelledby="editsucessModal"
-
         aria-hidden="true">
-
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-
             <div class="modal-content">
-
                 <div class="modal-header">
-
                     <h6 class="modal-title" id="modal-title-default">Add Cash Handling Charges</h6>
-
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
                         <span aria-hidden="true">×</span>
-
                     </button>
-
                 </div>
-
                 <div class="modal-body">
-
                     <div class="row">
-
                         <div class="col-md-12">
 
                             <form class="handling_charges" data-input_hidden="#handling_hidden_feilds"
@@ -413,39 +391,26 @@
                                     <div class="col-md-12 mt-4">
 
                                         <button type="button" data-type="handling" data-count="1"
-
                                             data-form_id="#handling_charges" class="float-right btn btn-orio btn-sm add_more_info"
-
-                                            style="min-width: 10px !important">+</button>
-
+                                            style="min-width: 10px !important">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1.5 10H18.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                <path d="M10 18.5V1.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                            </svg>
+                                        </button>
                                     </div>
-
                                 </div>
-
                             </form>
-
                             <table class="example2 display nowrap table table-hover mt-4" width="100%">
-
                                 <thead class="thead">
-
                                     <tr>
-
                                         <th>SNO</th>
-
-                                        <th>SERVICE</th>
-
                                         <th>Deduction</th>
-
                                         <th>Minimum Amount</th>
-
                                         <th>Maximum Amount</th>
-
                                         <th>Charges</th>
-
                                         <th>Action</th>
-
                                     </tr>
-
                                 </thead>
 
                                 <tbody id="handling_display">
@@ -457,41 +422,23 @@
                             </table>
 
                             <form action="#" method="post" id="add_new_handling">
-
                                 <div id="handling_hidden_feilds"></div>
-
                                 <input type="hidden" name="customer_acno" value="{{ $payload->acno }}">
-
                             </form>
-
                         </div>
-
                         <div class="col-md-12 text-center mt-1">
-
                             <div class="d-flex justify-content-center w-100">
-
                                 <button type="button" class="btn btn-sm btn-secondary-orio mr-3 my-3"
-
                                     data-dismiss="modal" aria-label="Close">Close</button>
-
                                 <button type="button" data-form_id="#add_new_handling"
-
                                     class="btn btn-sm btn-orio add_new_charge_btn my-3">Add Cash Handling
-
                                     Charges</button>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
     {{--  add_additional_modal --}}
     <div class="modal fade" id="add_additional_modal" role="dialog" aria-labelledby="editsucessModal"
@@ -623,17 +570,16 @@
                                     </div>
 
                                     <div class="col-md-12 mt-4">
-
                                         <button type="button" data-count="1" data-type="additional"
-
                                             data-form_id="#additional_charges" class="float-right btn btn-orio btn-sm add_more_info"
-
-                                            style="min-width: 10px !important">+</button>
-
+                                            style="min-width: 10px !important">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1.5 10H18.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                <path d="M10 18.5V1.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                            </svg>
+                                        </button>
                                     </div>
-
                                 </div>
-
                             </form>
 
                             <table class="example2 display nowrap table table-hover mt-4" width="100%">
@@ -1074,77 +1020,40 @@
                                                 <thead class="thead">
 
                                                     <tr>
-
-                                                        <th></th>
-
                                                         <th>SNO</th>
-
                                                         <th colspan="4">Service</th>
-
                                                         <th>Origin Country</th>
-
                                                         <th>Destination Country</th>
-
                                                         <th colspan="4">Region</th>
-
                                                         <th colspan="1">Start weight</th>
-
                                                         <th>End weight</th>
-
                                                         <th>Charges</th>
-
                                                         <th>Additional weight</th>
-
                                                         <th>Additional charges</th>
-
                                                         <th>RTO charges</th>
-
                                                         <th>Additional Charges (RTO)</th>
-
                                                         <th>Actions</th>
-
                                                     </tr>
-
                                                 </thead>
-
                                                 <tbody>
-
                                                     @if (count($charges->tarifs) > 0)
-
                                                         <form action="#" id="update_tarif_form" method="post">
-
                                                             @foreach ($charges->tarifs as $key => $tarif)
-
                                                                 <tr>
-
-                                                                    <td>
-
+                                                                    <td class="d-flex align-items-center justify-content-center">
                                                                         <div class="custom-control custom-checkbox my-3">
-
                                                                             <input type="checkbox"
-
                                                                                 class="custom-control-input check_box"
-
                                                                                 data-btn_id="#update_tariff"
-
                                                                                 name="checked_id[]"
-
                                                                                 value="{{ $tarif->id }}"
-
                                                                                 id="addiCheck{{ $loop->iteration }}"
-
                                                                                 data-form="update_tarif_form_{{ $loop->iteration }}">
-
                                                                             <label class="custom-control-label"
-
                                                                                 for="addiCheck{{ $loop->iteration }}"></label>
-
                                                                         </div>
-
+                                                                        {{ $loop->iteration }}
                                                                     </td>
-
-                                                                    <td>{{ $loop->iteration }}</td>
-
                                                                     <td colspan="4">
 
                                                                         <select required
@@ -1430,27 +1339,17 @@
                                                                             value="{{ $tarif->additional_rto_charges }}" required>
 
                                                                     </td>
-
                                                                     <td>
-
                                                                         <button type="button"
-
-                                                                            class="btn btn-danger p-2 btn-sm delete"
-
+                                                                            class="btn p-2 btn-sm delete"
                                                                             table="customer_tariffs"
-
                                                                             style="min-width: 10px !important"
-
-                                                                            data-id="{{ $tarif->id }}"><i
-
-                                                                                class="fa-solid fa-trash"></i></button>
-
+                                                                            data-id="{{ $tarif->id }}">
+                                                                                <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9 8.5V17" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M13 8.5V17" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M2.75 4.5L3.89495 19.6133C3.95421 20.3955 4.60619 21 5.39066 21H16.6093C17.3938 21 18.0458 20.3955 18.1051 19.6133L19.25 4.5" stroke="#525252" stroke-width="2"></path> <path d="M1 4.5H21" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M7.5 4.5L8.22075 2.81824C8.69349 1.71519 9.7781 1 10.9782 1H11.0218C12.2219 1 13.3065 1.71519 13.7792 2.81824L14.5 4.5" stroke="#525252" stroke-width="2" stroke-linejoin="round"></path> </svg>    
+                                                                        </button>
                                                                     </td>
-
                                                                 </tr>
-
                                                             @endforeach
-
                                                         </form>
 
                                                     @else
@@ -1514,35 +1413,19 @@
                                             Charges</button>
 
                                         <button data-check_id="check_box"
-
                                             class="btn btn-secondary-orio d-none float-right mb-3 update_charges_btn"
-
                                             id="update_handling_charges">Update Charges</button>
-
                                         <table class="example2 display nowrap table table-hover mt-4" width="100%">
-
                                             <thead class="thead">
-
                                                 <tr>
-
-                                                    <th></th>
-
                                                     <th>SNO</th>
-
                                                     <th>Deduction</th>
-
                                                     <th>Minimum Amount</th>
-
                                                     <th>Maximum Amount</th>
-
                                                     <th>Charges</th>
-
                                                     <th>Action</th>
-
                                                 </tr>
-
                                             </thead>
-
                                             <tbody>
 
                                                 @if (count($charges->cash_handling) > 0)
@@ -1552,34 +1435,20 @@
                                                         @foreach ($charges->cash_handling as $key => $cash_handling)
 
                                                             <tr>
-
-                                                                <td>
-
+                                                                <td class="d-flex align-items-center justify-content-center">
                                                                     <div class="custom-control custom-checkbox my-3">
-
                                                                         <input type="checkbox"
-
                                                                             class="custom-control-input check_box"
-
                                                                             data-btn_id="#update_handling_charges"
-
                                                                             name="checked_id[]"
-
                                                                             value="{{ $cash_handling->id }}"
-
                                                                             id="handlingCheck{{ $loop->iteration }}"
-
                                                                             data-form="update_tarif_form_{{ $loop->iteration }}">
-
                                                                         <label class="custom-control-label"
-
                                                                             for="handlingCheck{{ $loop->iteration }}"></label>
-
                                                                     </div>
-
+                                                                    {{ $loop->iteration }}
                                                                 </td>
-
-                                                                <td>{{ $loop->iteration }}</td>
 
                                                                 <td>
 
@@ -1666,23 +1535,15 @@
                                                                 </td>
 
                                                                 <td>
-
                                                                     <button type="button"
-
-                                                                        class="btn btn-danger p-2 btn-sm delete"
-
+                                                                        class="btn p-2 btn-sm delete"
                                                                         table="customer_cash_handling_charges"
-
                                                                         style="min-width: 10px !important"
-
-                                                                        data-id="{{ $cash_handling->id }}"><i
-
-                                                                            class="fa-solid fa-trash"></i></button>
-
+                                                                        data-id="{{ $cash_handling->id }}">
+                                                                        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9 8.5V17" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M13 8.5V17" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M2.75 4.5L3.89495 19.6133C3.95421 20.3955 4.60619 21 5.39066 21H16.6093C17.3938 21 18.0458 20.3955 18.1051 19.6133L19.25 4.5" stroke="#525252" stroke-width="2"></path> <path d="M1 4.5H21" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M7.5 4.5L8.22075 2.81824C8.69349 1.71519 9.7781 1 10.9782 1H11.0218C12.2219 1 13.3065 1.71519 13.7792 2.81824L14.5 4.5" stroke="#525252" stroke-width="2" stroke-linejoin="round"></path> </svg> 
+                                                                    </button>
                                                                 </td>
-
                                                             </tr>
-
                                                         @endforeach
 
                                                     </form>
@@ -1752,29 +1613,16 @@
                                             id="update_additional_charges">Update Charges</button>
 
                                         <table class="example2 display nowrap table table-hover mt-4" width="100%">
-
                                             <thead class="thead">
-
                                                 <tr>
-
-                                                    <th width="10"></th>
-
                                                     <th>SNO</th>
-
                                                     <th>SERVICE</th>
-
                                                     <th>Deduction</th>
-
                                                     <th>Additional</th>
-
                                                     <th>Charges</th>
-
                                                     <th>Action</th>
-
                                                 </tr>
-
                                             </thead>
-
                                             <tbody>
 
                                                 @if (count($charges->additional_charges) > 0)
@@ -1786,34 +1634,20 @@
                                                         @foreach ($charges->additional_charges as $key => $additional)
 
                                                             <tr>
-
-                                                                <td>
-
+                                                                <td class="d-flex align-items-center justify-content-center">
                                                                     <div class="custom-control custom-checkbox my-3">
-
                                                                         <input type="checkbox"
-
                                                                             data-btn_id="#update_additional_charges"
-
                                                                             class="custom-control-input check_box"
-
                                                                             name="add_checked_id[]"
-
                                                                             value="{{ $additional->id }}"
-
                                                                             id="addCheck{{ $loop->iteration }}"
-
                                                                             data-form="update_tarif_form_{{ $loop->iteration }}">
-
                                                                         <label class="custom-control-label"
-
                                                                             for="addCheck{{ $loop->iteration }}"></label>
-
                                                                     </div>
-
+                                                                    {{ $loop->iteration }}
                                                                 </td>
-
-                                                                <td>{{ $loop->iteration }}</td>
 
                                                                 <td>
 
@@ -1976,21 +1810,14 @@
                                                                 </td>
 
                                                                 <td>
-
                                                                     <button type="button"
-
-                                                                        class="btn btn-danger p-2 btn-sm delete"
-
+                                                                        class="btn p-2 btn-sm delete"
                                                                         table="customer_additional_charges"
-
                                                                         style="min-width: 10px !important"
-
-                                                                        data-id="{{ $additional->id }}"><i
-
-                                                                            class="fa-solid fa-trash"></i></button>
-
+                                                                        data-id="{{ $additional->id }}">
+                                                                        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9 8.5V17" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M13 8.5V17" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M2.75 4.5L3.89495 19.6133C3.95421 20.3955 4.60619 21 5.39066 21H16.6093C17.3938 21 18.0458 20.3955 18.1051 19.6133L19.25 4.5" stroke="#525252" stroke-width="2"></path> <path d="M1 4.5H21" stroke="#525252" stroke-width="2" stroke-linecap="round"></path> <path d="M7.5 4.5L8.22075 2.81824C8.69349 1.71519 9.7781 1 10.9782 1H11.0218C12.2219 1 13.3065 1.71519 13.7792 2.81824L14.5 4.5" stroke="#525252" stroke-width="2" stroke-linejoin="round"></path> </svg>                                                             
+                                                                    </button>
                                                                 </td>
-
                                                             </tr>
 
                                                         @endforeach
@@ -2028,11 +1855,8 @@
     </div>
 
     </div>
-
     <script>
-
         var listRoute = "";
-
     </script>
 
     @if ($type == 'edit')
@@ -2044,12 +1868,8 @@
     @endif
 
 @section('scripts')
-
     <script src="{{ asset('assets/js/customers/customers.js') }}"></script>
-
     <script src="{{ asset('assets/js/customers/charges.js') }}"></script>
-
 @endsection
-
 @endsection
 

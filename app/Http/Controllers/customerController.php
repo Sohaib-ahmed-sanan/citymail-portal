@@ -34,14 +34,12 @@ class customerController extends Controller
             if ($result->status == 1) {
                 $payload = $result->payload;
                 $resultsCount = count($payload);
-                $aaData = [];
-                $i = 1;
                 foreach ($payload as $key => $row) {
                     $statusBadgeClass = $row->active == 1 ? ' badge-neutral-success text-success' : ' badge-neutral-danger text-danger';
                     $statusBadge = '<button table="customers" data-id="' . $row->id . '" data-status="' . ($row->active == 1 ? '0' : '1') . '" class="status_btn btn badge badge-pill ' . $statusBadgeClass . '">' . ($row->active == 1 ? 'Active' : 'Inactive') . '</button>';
                     $actions = '<div class="action-perform-btns">
-                    <a style="color: #ba0c2f !important;" href="' . route('customer.add_edit_customer', ['id' => $row->id]) . '" class="" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' . asset('images/default/svg/edit.svg') . '" width="15" alt="Edit"></a>
-                <a table="customers" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete"></a>
+                    <a style="color: #ba0c2f !important;" href="' . route('customer.add_edit_customer', ['id' => $row->id]) . '" class="" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="Edit"></a>
+                <a table="customers" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete"></a>
             </div>';
                     $aaData[] = [
                         'SNO' => ++$key,
@@ -248,7 +246,6 @@ class customerController extends Controller
     {
         $request->validate([
             "customer_acno" => "required",
-            "service_name" => "required",
         ]);
         // for tariff
         $tarif_array = array();
@@ -315,12 +312,13 @@ class customerController extends Controller
         if(count($tarif_array) > 0){
             $data['acno'] = $request->customer_acno;
             $data['charges'] = $tarif_array;
+            $data['created_by'] = session('logged_id');
             $result = getAPIdata('customers/addCharges', $data);
             // $result = getAPIJson('customers/addCharges', $data);
-            // print_r($result);die;
-            $return = ['status' => $result->status, 'message' => $result->message];
+            // dd($result);
+            $return = ['status' => $result->status, 'message' => $result->message,'payload'=> $result->payload];
         }else{
-            $return = ['status' => 0, 'message' => 'No data to insert'];
+            $return = ['status' => 0, 'message' => 'No data to insert','payload'=> []];
         }
         return response()->json($return);
 
@@ -394,11 +392,8 @@ class customerController extends Controller
             }
 
         }
-
-        // $result = getAPIJson('customers/updateCharges', ['charges' => $tarif_array]);
-        // dd($result);
         $result = getAPIdata('customers/updateCharges', ['customer_acno' => $request->customer_acno,'charges' => $tarif_array]);
-        $return = ['status' => $result->status, 'message' => $result->message];
+        $return = ['status' => $result->status, 'message' => $result->message,'payload'=> $result->payload];
         return response()->json($return);
 
     }
@@ -431,8 +426,8 @@ class customerController extends Controller
                     $statusBadgeClass = ($row->active == 1) ? ' badge-neutral-success text-success' : ' badge-neutral-danger text-danger';
                     $statusBadge = '<button table="customers" data-id="' . $row->id . '" data-status="' . ($row->active == 1 ? '0' : '1') . '" class="status_btn btn badge badge-pill' . $statusBadgeClass . '">' . ($row->active == 1 ? 'Active' : 'Inactive') . '</button>';
                     $actions = '<div class="action-perform-btns">
-                    <a style="color: #ba0c2f !important;" href="' . route('customer.add_edit_sub_account', ['id' => $row->acno]) . '" class="" data-toggle="tooltip" title="Edit"><img src="' . asset('images/default/svg/edit.svg') . '" width="15" alt="Edit"></a>
-                <a table="customers" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete"></a>
+                    <a style="color: #ba0c2f !important;" href="' . route('customer.add_edit_sub_account', ['id' => $row->acno]) . '" class="" data-toggle="tooltip" title="Edit"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="Edit"></a>
+                <a table="customers" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete"></a>
             </div>';
                     $aaData[] = [
                         'SNO' => ++$key,
@@ -609,8 +604,8 @@ class customerController extends Controller
                     $statusBadgeClass = ($row->active == 1) ? ' badge-neutral-success text-success' : ' badge-neutral-danger text-danger';
                     $statusBadge = '<button table="customers" data-id="' . $row->id . '" data-status="' . ($row->active == 1 ? '0' : '1') . '" class="status_btn btn badge badge-pill' . $statusBadgeClass . '">' . ($row->active == 1 ? 'Active' : 'Inactive') . '</button>';
                     $actions = '<div class="action-perform-btns">
-                    <a style="color: #ba0c2f !important;" href="' . route('customer.add_edit_sub_account', ['id' => $row->acno]) . '" class="" data-toggle="tooltip" title="Edit"><img src="' . asset('images/default/svg/edit.svg') . '" width="15" alt="Edit"></a>
-                <a table="customers" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete"></a>
+                    <a style="color: #ba0c2f !important;" href="' . route('customer.add_edit_sub_account', ['id' => $row->acno]) . '" class="" data-toggle="tooltip" title="Edit"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="Edit"></a>
+                <a table="customers" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete"></a>
             </div>';
                     $aaData[] = [
                         'SNO' => ++$key,

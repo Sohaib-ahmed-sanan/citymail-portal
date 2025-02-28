@@ -155,18 +155,14 @@
 
     <div class="app-content">
         <div class="app-content--inner">
-
             <div class="pb-4 text-center text-xl-left">
-
                 <div class="row align-items-center">
-
                     <div class="col-xl-5">
                         <div>
                             <h5 class="title-text mb-1">{{ $title }}</h5>
                              <p class="sub-title-text mb-0">Please see list of {{ strtolower($title) }} below</p>
                         </div>
                     </div>
-
                     <div class="col-xl-7 d-flex align-items-center justify-content-start mt-xl-0 justify-content-xl-end">
                         <button class="btn btn-sm btn-custom mr-2" data-toggle="modal" data-target="#filter_modal">
                             <img src="{{ asset('assets/icons/Apply Filter.svg') }}">
@@ -222,9 +218,9 @@
                                 </div>
                                 SNO
                             </th>
+                            <th>Consignment No</th>
                             <th>ACNO</th>
                             <th>Customer Name</th>
-                            <th>Consignment No</th>
                             @if (is_ops())
                                 <th>TPL No</th>
                             @endif
@@ -251,13 +247,13 @@
                 </table>
             </div>
 
-        @section('scripts')
             <script>
-                var listRoute = "{{ Route('admin.manualBooking') }}";
-                var sessionType = "{{ session('type') }}";
+                const sessionType = "{{ session('type') }}";
                 var route = "{{ route('admin.cancle_cn') }}";
                 var pageType = "";
             </script>
+        @section('scripts')
+            <script src="{{ asset('assets/js/datatable-helper.js') }}"></script>
             <script src="{{ asset('assets/js/shipments/manual_booking.js') }}"></script>
             <script src="https://cdn.datatables.net/fixedcolumns/4.0.1/js/fixedColumns.bootstrap4.min.js"></script>
         	<script src="https://cdn.datatables.net/fixedcolumns/4.0.1/js/dataTables.fixedColumns.min.js"></script>

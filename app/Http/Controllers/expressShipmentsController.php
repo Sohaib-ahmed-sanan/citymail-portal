@@ -15,13 +15,14 @@ class expressShipmentsController extends Controller
         }
         if ($request->isMethod('POST')) {
             $company_id = (int) session('company_id');
+            $customer_acno = (string) session('acno');
             $start_date = $request->start_date;
             $end_date = $request->end_date;
             $destination_id = (int) $request->destination_id;
             $country_id = (int) $request->country_id;
             $status_id = (int) $request->status_id;
 
-            $data = compact('company_id', 'start_date', 'end_date', 'country_id', 'destination_id', 'status_id');
+            $data = compact('company_id','customer_acno','start_date','end_date','country_id','destination_id','status_id');
             $result = getAPIdata('express-shipments/index', $data);
             $aaData = [];
             $i = 1;
@@ -38,7 +39,6 @@ class expressShipmentsController extends Controller
                     if (is_ops() && !in_array($row->status, ['14', '15', '16'])) {
                         $edit_btn = '<a style="color: #ba0c2f !important;" href="' . route('admin.add_edit-express-shipments', ['id' => $row->id]) . '" class="" data-toggle="tooltip" title="Edit"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="Edit"></a>';
                     }
-
                     $actions =
                         '<div class="action-perform-btns">' .
                         $edit_btn .
@@ -47,12 +47,20 @@ class expressShipmentsController extends Controller
                         '" class="" data-toggle="tooltip" title="Print"><img src="' .
                         asset('assets/icons/Print.svg') .
                         '" width="15" alt="Print"></a>
-                            <a style="color: #ba0c2f !important;" target="_blank"
+                            <a target="_blank"
                                 href="'. route('admin.proforma-invoice', ['id' => base64_encode($row->consignment_no)]).'"
                                 class="" data-toggle="tooltip" title="Performa Invoice Print">
                                 <i class="fa-solid fa-sheet-plastic"></i>
-                            </a>
-                        </div>';
+                            </a>';
+                            if(isset($row->document) && $row->document != ""){
+                                $actions .= '<a target="_blank"
+                                href="'.env('API_URL').$row->document.'"
+                                class="" data-toggle="tooltip" title="Download Document">
+                                <img src="'.asset('assets/icons/Download.svg').'" width="15" alt="Download Document" download>
+                            </a>'; 
+                            }
+
+                        $actions .= '</div>';
                     $aaData[] = [
                         'SNO' => ++$key,
                         'CN' => $row->consignment_no,
@@ -98,7 +106,9 @@ class expressShipmentsController extends Controller
             $customers_function = get_customers(1);
             $customers = $customers_function->original['payload'];
             $sub_accounts = [];
+            $pickup_locations = [];
             if (session('type') === '6') {
+                $pickup_locations = [];
                 $fetch_sub_acc = get_customers_sub(session('acno'));
                 $sub_accounts = $fetch_sub_acc->original;
             }
@@ -238,8 +248,8 @@ class expressShipmentsController extends Controller
             'name' => (string) $request->customer_name,
             'email' => (string) $request->customer_email,
             'phone' => (string) $request->customer_phone,
-            'city_id' => (int) $request->customer_city_id,
-            'country_id' => (int) $request->customer_country_id,
+            'city_id' => (int) '655',
+            'country_id' => (int) '449',
             'address' => (string) $request->customer_address,
             'business_name' => (string) $request->customer_business_name,
             'business_address' => (string) $request->customer_business_address,

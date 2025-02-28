@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Http;
 if (!function_exists('GET_API_CONTENT')) {
     function GET_API_CONTENT($API_URL, $json)
     {
-        $headers = ['Content-Type: application/json', 'Api-Key: ' . base64_encode(session('type')) . '%' . session('secret_key') . '!' . session('company_id') . ':' . time(), 'Client-Id: ' . session('logged_id')];
+        $token_str = base64_encode(session('type').'%'.session('secret_key').'%'.session('company_id').'%'.session('acno').'%internal%'.time());
+        // $headers = ['Content-Type: application/json', 'Api-Key: ' . base64_encode(session('type')) . '%' . session('secret_key') . '!' . session('company_id') . ':' . time(), 'Client-Id: ' . session('logged_id')];
+        $headers = ['Content-Type: application/json', 'Api-Key: '.$token_str, 'Client-Id: '.session('logged_id')];
 
-        // return $headers;
-
+       
         $ch = curl_init();
 
         curl_setopt_array(

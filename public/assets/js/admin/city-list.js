@@ -129,5 +129,55 @@ $(document).ready(function () {
 });
 
 
+$(document).on('click', '#add-city', function (e) {
+    var form_id = $(this).closest('.modal-content').find('form').attr('id');
+    var title = $(this).html()
+    var forms = $("#" + form_id);
+    forms.parsley().validate();
+    initLoader('add-city', 'btn-orio');
+    if (!forms.parsley().isValid()) {
+        destroyLoader('add-btn', title, 'btn-orio')
+        return false;
+    }
+    e.preventDefault();
+    if (forms.parsley().isValid()) {
+        var formdata = new FormData($("#" + form_id)[0]);
+        $.ajax({
+            url: BASEURL+'add-city',
+            type: "POST",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 8000000,
+            success: function (result) {
+                if (result.status == 1) {
+                    swal.fire({
+                        icon: "success",
+                        title: 'Success',
+                        text: result.message,
+                        confirmButtonClass: "btn-success",
+                        type: "success",
+                    });
+                    destroyLoader('add-city', title, 'btn-orio')
+                    $("#add_modal").modal("hide");
+                    $("#" + form_id)[0].reset();
+                    $("#example").DataTable().ajax.reload();
+                }
+                if (result.status == 0) {
+                    notify("danger","Error",result.message);
+                    destroyLoader('add-city', title, 'btn-orio')
+                }
+            },
+            error: function (xhr, err) {
+                var errorMessage = xhr.responseJSON.message;
+                notify("danger", errorMessage);
+                destroyLoader('add-city', title, 'btn-orio')
+            }
+        });
+
+    }
+});
+
 
 

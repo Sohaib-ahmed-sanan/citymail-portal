@@ -34,9 +34,9 @@ class ArrivalDestinationController extends Controller
                 $aaData = [];
                 $i = 1;
                 foreach ($payload as $key => $row) {
-                    //   <a data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" style="color: #ba0c2f !important;" href="' . route('admin.add_edit_arrivals', ['id' => $row->arrival_no]) . '" class="" odidcn="28"><img src="' . asset('images/default/svg/edit.svg') . '" width="15" alt="EDIT"></a>
+                    //   <a data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" style="color: #ba0c2f !important;" href="' . route('admin.add_edit_arrivals', ['id' => $row->arrival_no]) . '" class="" odidcn="28"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="EDIT"></a>
                     $actions = '<div class="action-perform-btns">
-                      <a style="color: #ba0c2f !important;" target="_blank" href="' . route('admin.arrivalsheet-pdf', ['id' => $row->arrival_no]) . '" class="" data-toggle="tooltip" title="Print"><img src="' . asset('images/default/svg/print.svg') . '" width="15" alt="Print"></a>
+                      <a style="color: #ba0c2f !important;" target="_blank" href="' . route('admin.arrivalsheet-pdf', ['id' => $row->arrival_no]) . '" class="" data-toggle="tooltip" title="Print"><img src="' . asset('assets/icons/Print.svg') . '" width="15" alt="Print"></a>
                    </div>';
                     $aaData[] = [
                         'SNO' => ++$key,
@@ -167,9 +167,8 @@ class ArrivalDestinationController extends Controller
         $created_by = session('logged_id');
         $company_id = session('company_id');
         $data = $request->data;
-        $params = compact('company_id', 'station_id', 'created_by', 'data');
-        // dd($params);
-        $result = getAPIdata('arrival-destination/add', $params);
+        $params = compact('company_id', 'station_id', 'created_by', 'data');        
+        $result = getAPIdata('arrival-destination/add', $params);       
         $cn_arr = [];
         if ($result->status == 1) {
             $error_array = $result->payload->error;
@@ -193,24 +192,24 @@ class ArrivalDestinationController extends Controller
             $data = (array) $records;
             extract($data);
             $actions = '<div class="action-perform-btns">
-            <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' . $consignment_no . '" data-bs-placement="top" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete" ></a>
+            <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' . $consignment_no . '" data-bs-placement="top" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete" ></a>
             </div>';
             $html .= '<tr>
-                                    <td class="cn_no">' . $consignment_no . '</td>    
-                                    <td class="">' . $name . '</td>    
-                                    <td class="">' . $consignee_name . '</td>    
-                                    <td class="">' . $city . '</td>    
-                                    <td class="">' . $shipment_referance . '</td>    
-                                    <td><input style="width:150px !important" value="' . $peices_charged . '" minlength="1" maxlength="8" type="text" readonly class="form-control-lg number" name="arrival_peices[]"></td>
-                                    <td><input style="width:150px !important" value="' . $weight_charged . '" minlength="1" maxlength="8" type="text" readonly class="form-control-lg float" name="arrival_weight[]"></td>
-                                    
-                                    <td class="d-none origin_city" data-colum="origin">' . $city_id . '</td>
-                                    <td class="d-none destination_city" data-colum="destination">' . $destination_city_id . '</td>
-                                    <td class="d-none cod_amt" data-colum="cod">' . $order_amount . '</td>
-                                    <td class="d-none service" data-colum="service">' . $service_id . '</td>
-                                    <td class="d-none customer_acno" data-colum="customer_acno">' . $customer_acno . '</td>
-                                    <td>' . $actions . '</td>    
-                                </tr>';
+                        <td class="cn_no">' . $consignment_no . '</td>    
+                        <td class="">' . $name . '</td>    
+                        <td class="">' . $consignee_name . '</td>    
+                        <td class="">' . $city . '</td>    
+                        <td class="">' . $shipment_referance . '</td>    
+                        <td><input style="width:150px !important" value="' . $peices_charged . '" minlength="1" maxlength="8" type="text" readonly class="form-control-lg number" name="arrival_peices[]"></td>
+                        <td><input style="width:150px !important" value="' . $weight_charged . '" minlength="1" maxlength="8" type="text" readonly class="form-control-lg float" name="arrival_weight[]"></td>
+                        
+                        <td class="d-none origin_city" data-colum="origin">' . $city_id . '</td>
+                        <td class="d-none destination_city" data-colum="destination">' . $destination_city_id . '</td>
+                        <td class="d-none cod_amt" data-colum="cod">' . $order_amount . '</td>
+                        <td class="d-none service" data-colum="service">' . $service_id . '</td>
+                        <td class="d-none customer_acno" data-colum="customer_acno">' . $customer_acno . '</td>
+                        <td>' . $actions . '</td>    
+                    </tr>';
 
         }
         return $html;

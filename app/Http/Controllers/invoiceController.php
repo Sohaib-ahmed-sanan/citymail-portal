@@ -54,7 +54,7 @@ class invoiceController extends Controller
                     $actions = '<div class="action-perform-btns">
                     <a target="_blank" style="color: #ba0c2f !important;" href="' . route('admin.invoice_pdf', ['id' => $row->invoice_no]) . '" class="" data-toggle="tooltip" title="Print"><img src="' . asset('images/default/svg/print.svg') . '" width="15" alt="Print"></a>';
                     if (is_ops() && $row->status == '0') {
-                        $actions .= '<a class="delete_invoice" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete"></a>';
+                        $actions .= '<a class="delete_invoice" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete"></a>';
                     }
                     if (is_ops() && $row->status == '0') {
                         $actions .= '<a class="mark_paid" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Mark Paid"><i class="fa-solid fa-dollar-sign fa-lg text-primary"></i></a>';
@@ -136,7 +136,7 @@ class invoiceController extends Controller
                 $statusBadgeClass = ($records->status == '14') ? ' badge-neutral-success text-success' : ' badge-neutral-danger text-danger';
                 $statusBadge = '<button class="btn badge badge-pill' . $statusBadgeClass . '">' . $records->status_name . '</button>';
                 $actions = '<div class="action-perform-btns">
-                              <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-toggle="tooltip" data-id="' . $records->consignment_no . '" data-bs-placement="top" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete" ></a>
+                              <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-toggle="tooltip" data-id="' . $records->consignment_no . '" data-bs-placement="top" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete" ></a>
                           </div>';
                 $data = (array) $records;
                 extract($data);
@@ -267,7 +267,7 @@ class invoiceController extends Controller
                 $i = 1;
                 foreach ($payload as $key => $row) {
                     $actions = '<div class="action-perform-btns">
-                     <a table="de_manifist" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete"></a>
+                     <a table="de_manifist" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete"></a>
                       </div>';
                     $statusBadgeClass = ($row->status == '14') ? ' badge-neutral-success text-success' : ' badge-neutral-danger text-danger';
                     $statusBadge = '<button class="btn badge badge-pill' . $statusBadgeClass . '">' . $row->status_name . '</button>';

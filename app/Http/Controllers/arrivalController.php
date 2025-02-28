@@ -32,8 +32,8 @@ class arrivalController extends Controller
                 $i = 1;
                 foreach ($payload as $key => $row) {
                     $actions = '<div class="action-perform-btns">
-                 <a data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" style="color: #ba0c2f !important;" href="' . route('admin.add_edit_arrivals', ['id' => $row->arrival_no]) . '" class="" odidcn="28"><img src="' . asset('images/default/svg/edit.svg') . '" width="15" alt="EDIT"></a>
-                    <a style="color: #ba0c2f !important;" target="_blank" href="' . route('admin.pickup-sheet-pdf', ['id' => $row->arrival_no]) . '" class="" data-toggle="tooltip" title="Print"><img src="' . asset('images/default/svg/print.svg') . '" width="15" alt="Print"></a>
+                 <a data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" style="color: #ba0c2f !important;" href="' . route('admin.add_edit_arrivals', ['id' => $row->arrival_no]) . '" class="" odidcn="28"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="EDIT"></a>
+                    <a style="color: #ba0c2f !important;" target="_blank" href="' . route('admin.pickup-sheet-pdf', ['id' => $row->arrival_no]) . '" class="" data-toggle="tooltip" title="Print"><img src="' . asset('assets/icons/Print.svg') . '" width="15" alt="Print"></a>
                  </div>';
                     $aaData[] = [
                         'SNO' => ++$key,
@@ -88,8 +88,10 @@ class arrivalController extends Controller
                         'cn_number' => $single_cn,
                         'weight' => $request->weight[$key],
                         'peices' => $request->peices[$key],
-                        'origin' => $request->origin[$key],
-                        'destination' => $request->destination[$key],
+                        'origin_country' => $request->origin_country[$key],
+                        'origin_city' => $request->origin_city[$key],
+                        'destination_country' => $request->destination_country[$key],
+                        'destination_city' => $request->destination_city[$key],
                         'cod_amt' => $request->cod_amt[$key],
                         'service_id' => $request->service_id[$key],
                     ];
@@ -115,12 +117,13 @@ class arrivalController extends Controller
             // if ($request->weight != '' && $request->peice) {
                foreach ($payload as $records) {
                     $actions = '<div class="action-perform-btns">
-                            <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' . $cn_number . '" data-bs-placement="top" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete" ></a>
+                            <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' . $cn_number . '" data-bs-placement="top" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete" ></a>
                             </div>';
                     $data = (array) $records;
                     extract($data);
                     $html .= '<tr>
                                 <td class="cn_number">' . $cn_number . '</td>    
+                                <td class="flag d-none">' . $result->payload[0]->shipment_type . '</td>    
                                 <td>' . $name . '</td>    
                                 <td>' . $consignee_name . '</td>    
                                 <td>' . $city . '</td>    
@@ -155,6 +158,7 @@ class arrivalController extends Controller
         foreach ($request->shipments as $key => $ship) {
             $data[] = [
                 'cn_number' => $ship['cn_number'],
+                'flag' => $ship['flag'],
                 'weight' => $ship['arrival_weight'],
                 'peices' => $ship['arrival_peices'],
                 'origin_city' => $ship['origin_city'],
@@ -172,7 +176,6 @@ class arrivalController extends Controller
         $created_by = session('logged_id');
         $company_id = session('company_id');
         $params = compact('company_id','station_id','created_by','data');
-        // dd($params);
         $result = getAPIdata('arrival-origin/add', $params);
         // $result = getAPIJson('arrival-origin/add', $params);
         // dd($result);

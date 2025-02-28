@@ -8,7 +8,8 @@ let datalist = (params) => {
         value_type,
         spinerType,
     } = params;
-    var title = ""; range = "";
+    var title = "";
+    range = "";
     var start_date = start.format("YYYY-MM-DD");
     var end_date = end.format("YYYY-MM-DD");
 
@@ -26,14 +27,19 @@ let datalist = (params) => {
     }
     var aoColumns = [];
     // Push other columns
-    aoColumns.push(
-        { data: "SNO" },
-        { data: "SEAL" },
-        { data: "DATE" },
-        { data: "MANICOUNT" },
-        { data: "CNCOUNT" },
-        { data: "ACTIONS" }
-    );
+    aoColumns.push({
+        data: "SNO"
+    }, {
+        data: "SEAL"
+    }, {
+        data: "DATE"
+    }, {
+        data: "MANICOUNT"
+    }, {
+        data: "CNCOUNT"
+    }, {
+        data: "ACTIONS"
+    });
     $("#example").DataTable({
         destroy: true,
         responsive: true,
@@ -74,7 +80,10 @@ let datalist = (params) => {
         searchDelay: 200,
         processing: true,
         serverSide: false,
-        lengthMenu: [[50, 100, 500, 1000], [50, 100, 500, 1000]],
+        lengthMenu: [
+            [50, 100, 500, 1000],
+            [50, 100, 500, 1000]
+        ],
         ajax: {
             url: listRoute,
             type: "POST",
@@ -129,21 +138,21 @@ $('#shipment_no').on('input', function () {
         var seal_no = $('#seal_no').val();
         if (seal_no.length > 3) {
             if ($('#' + shipment_no).length < 1) {
-                get_shipments(seal_no,shipment_no);
+                get_shipments(seal_no, shipment_no);
             } else {
                 notify("warning", "consignment number already exist !");
             }
-        }else{
+        } else {
             $('#seal_no').parsley().validate()
         }
     }
 });
 
-$('#seal_no').on('input',function(){
+$('#seal_no').on('input', function () {
     var seal_no = $(this).val();
     if (seal_no.length > 5) {
-        get_shipments(seal_no,'');
-    }else{
+        get_shipments(seal_no, '');
+    } else {
         $('#seal_no').parsley().validate()
     }
 });
@@ -151,7 +160,6 @@ $('#seal_no').on('input',function(){
 $(document).on('click', '#save-btn', function (e) {
     var forms = $("#search_form");
     var title = $(this).html()
-    initLoader('save-btn', title, 'btn-orio');
     forms.parsley().validate();
     if (!forms.parsley().isValid()) {
         destroyLoader('save-btn', title, 'btn-orio')
@@ -164,56 +172,72 @@ $(document).on('click', '#save-btn', function (e) {
         var station_id = $('#station_id').val();
         var rider_id = $('#rider_id').val();
         formdata.append('seal_no', seal_no);
-        formdata.append('station_id',station_id);
+        formdata.append('station_id', station_id);
         formdata.append('rider_id', rider_id);
-        $.ajax({
-            url: storeUrl,
-            type: "POST",
-            data: formdata,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 800000,
-            success: function (result) {
-                if (result.status == 1) {
-                    swal.fire({
-                        icon: "success",
-                        title: "DeManifist sheet no # " + result.payload.sheet_no,
-                        text: result.message,
-                        confirmButtonClass: "btn-success",
-                        type: "success",
-                    });
-                    window.setTimeout(function () {
-                        window.location.href = BASEURL + 'de-manifists';
-                    }, 3000);
-                    destroyLoader('save-btn', title, 'btn-orio')
-                } else {
-                    destroyLoader('save-btn', title, 'btn-orio')
-                    if (result.payload.error_consignments && result.payload.error_consignments.length > 0) {
-                        swal.fire({
-                            icon: "success",
-                            title: "DeManifist sheet no # " + result.payload.sheet_no,
-                            text: result.message+ ' ' + result.payload.error_consignments.join(', '),
-                            confirmButtonClass: "btn-success",
-                            type: "success",
-                        });
-                        window.setTimeout(function () {
-                            window.location.href = BASEURL + 'de-manifists';
-                        }, 3000);
-                    }else{
-                        notify("danger", 'Error', result.message);
+        swal.fire({
+            title: 'Confirmation',
+            text: 'Are you sure you want to generate demanifist',
+            type: "question",
+            buttonsStyling: !1,
+            showCancelButton: true,
+            confirmButtonText: 'Yes, create it!',
+            cancelButtonText: 'No, cancel',
+            confirmButtonClass: "btn btn-orio",
+            cancelButtonClass: "btn btn-secondary-orio mx-3"
+        }).then(action => {
+            if (action.value == true) {
+                initLoader('save-btn', title, 'btn-orio');
+                $.ajax({
+                    url: storeUrl,
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 800000,
+                    success: function (result) {
+                        if (result.status == 1) {
+                            swal.fire({
+                                icon: "success",
+                                title: "DeManifist sheet no # " + result.payload.sheet_no,
+                                text: result.message,
+                                confirmButtonClass: "btn-success",
+                                type: "success",
+                            });
+                            window.setTimeout(function () {
+                                window.location.href = BASEURL + 'de-manifists';
+                            }, 3000);
+                            destroyLoader('save-btn', title, 'btn-orio')
+                        } else {
+                            destroyLoader('save-btn', title, 'btn-orio')
+                            if (result.payload.error_consignments && result.payload.error_consignments.length > 0) {
+                                swal.fire({
+                                    icon: "success",
+                                    title: "DeManifist sheet no # " + result.payload.sheet_no,
+                                    text: result.message + ' ' + result.payload.error_consignments.join(', '),
+                                    confirmButtonClass: "btn-success",
+                                    type: "success",
+                                });
+                                window.setTimeout(function () {
+                                    window.location.href = BASEURL + 'de-manifists';
+                                }, 3000);
+                            } else {
+                                notify("danger", 'Error', result.message);
+                            }
+                        }
+                    },
+                    error: function (xhr, err) {
+                        var errorMessage = xhr.responseJSON.message;
+                        notify("danger", errorMessage);
+                        destroyLoader('save-btn', title, 'btn-orio')
                     }
-                }
-            },
-            error: function (xhr, err) {
-                var errorMessage = xhr.responseJSON.message;
-                notify("danger", errorMessage);
+                });
+            } else {
                 destroyLoader('save-btn', title, 'btn-orio')
             }
         });
     }
 });
-
 
 // to remove the cn 
 $(document).on('click', '.rem_row', function () {
@@ -274,7 +298,7 @@ $('#update-btn').click(function (e) {
 });
 
 
-let get_shipments = (seal_no='',shipment_no='') => {
+let get_shipments = (seal_no = '', shipment_no = '') => {
     console.log(seal_no);
     console.log(shipment_no);
     $.ajax({
@@ -286,7 +310,7 @@ let get_shipments = (seal_no='',shipment_no='') => {
         data: {
             seal_no: seal_no,
             shipment_no: shipment_no,
-            _token:$('meta[name="csrf-token"]').attr('content')
+            _token: $('meta[name="csrf-token"]').attr('content')
         },
         success: function (result) {
             if (result.status == 1) {

@@ -260,7 +260,7 @@ class thirdPartyController extends Controller
                     <td>' . ($row->weight_charged == '' ? '-' : $row->weight_charged) . '</td>
                     <td>' . $row->orignal_currency_code . '</td>
                     <td>' . $row->orignal_order_amt . '</td>
-                    <td> <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' . $row->consignment_no . '" data-bs-placement="top" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete" ></a></td>
+                    <td> <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' . $row->consignment_no . '" data-bs-placement="top" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete" ></a></td>
                 </tr>
                 ';
             }

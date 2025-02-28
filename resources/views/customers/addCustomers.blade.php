@@ -194,9 +194,11 @@
                                                         data-placeholder="Select Service" data-allow-clear="1">
                                                         <option value="">Select Service</option>
                                                         @foreach (session('services') as $service)
-                                                            <option data-service-code="{{ $service->service_code }}"
-                                                                value="{{ $service->id }}">
-                                                                {{ $service->service_name }}</option>
+                                                            @if (!in_array($service->id,['5','6']))
+                                                                <option data-service-code="{{ $service->service_code }}"
+                                                                    value="{{ $service->id }}">
+                                                                    {{ $service->service_name }}</option>                                                                
+                                                            @endif
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -373,7 +375,12 @@
                                                     <button type="button" data-count="1" data-type="tarrif"
                                                         data-form_id="#tariff_details"
                                                         class="btn btn-orio btn-sm float-right add_more_info"
-                                                        style="min-width: 10px !important">+</button>
+                                                        style="min-width: 10px !important">
+                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1.5 10H18.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                            <path d="M10 18.5V1.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                        </svg>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -468,7 +475,12 @@
                                                     <button type="button" data-type="handling" data-count="1"
                                                         data-form_id="#handling_charges"
                                                         class="float-right btn btn-orio btn-sm float-right add_more_info"
-                                                        style="min-width: 10px !important">+</button>
+                                                        style="min-width: 10px !important">
+                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1.5 10H18.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                            <path d="M10 18.5V1.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                        </svg>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -565,7 +577,12 @@
                                                     <button type="button" data-count="1" data-type="additional"
                                                         data-form_id="#additional_charges"
                                                         class="btn btn-orio float-right btn-sm add_more_info"
-                                                        style="min-width: 10px !important">+</button>
+                                                        style="min-width: 10px !important">
+                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1.5 10H18.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                            <path d="M10 18.5V1.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+                                                        </svg>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>

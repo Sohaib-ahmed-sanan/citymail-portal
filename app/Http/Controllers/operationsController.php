@@ -30,8 +30,7 @@ class operationsController extends Controller
             $status = $request->status_id == 'NA' ? null : $request->status_id;
             $data = compact('type', 'customer_acno', 'compnay_id', 'status', 'city_id');
             $result = getAPIdata('pickups/index', $data);
-            // $result = getAPIJson('pickups/index', $data);
-            // dd($result);
+            
             $commonController = app(commonController::class);
             $riders = $commonController->get_riders_dropdown();
             $aaData = [];
@@ -40,8 +39,6 @@ class operationsController extends Controller
             if ($result->status == 1) {
                 $payload = $result->payload;
                 $resultsCount = count($payload);
-                $aaData = [];
-                $i = 1;
                 foreach ($payload as $key => $row) {
                     $actions =
                         '<div class="action-perform-btns">
@@ -77,8 +74,7 @@ class operationsController extends Controller
                         '"></label>
         </div>';
                     $aaData[] = [
-                        'CHECK' => $checkBox,
-                        'SNO' => ++$key,
+                        'SNO' =>'<div class="d-flex">'.$checkBox.' '.++$key.'</div>',
                         'DATE' => Carbon::parse($row->created_at)->format('d-m-Y'),
                         'PICKUP' => $row->pickup_location,
                         'CITY' => $row->pickup_city,
@@ -140,7 +136,7 @@ class operationsController extends Controller
                 $payload = $result->payload;
                 $resultsCount = count($payload);
                 foreach ($payload as $key => $row) {
-                    // <a style="color: #ba0c2f !important;" href="' . route('admin.add_edit_manifist', ['id' => $row->id]) . '" class="" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' . asset('images/default/svg/edit.svg') . '" width="15" alt="Edit"></a>
+                    // <a style="color: #ba0c2f !important;" href="' . route('admin.add_edit_manifist', ['id' => $row->id]) . '" class="" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="Edit"></a>
                     $actions =
                         '<div class="action-perform-btns">
                         <a style="color: #ba0c2f !important;" target="_blank" href="' .
@@ -152,7 +148,7 @@ class operationsController extends Controller
                         // <a table="manifists" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' .
                         // $row->id .
                         // '" data-toggle="tooltip" title="Delete"><img src="' .
-                        // asset('images/default/svg/delete.svg') .
+                        // asset('assets/icons/Delete.svg') .
                         // '" width="15" alt="Delete"></a>
 
                     $aaData[] = [
@@ -242,7 +238,7 @@ class operationsController extends Controller
                           <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' .
                     $request->shipment_no .
                     '" data-bs-placement="top" title="Delete"><img src="' .
-                    asset('images/default/svg/delete.svg') .
+                    asset('assets/icons/Delete.svg') .
                     '" width="15" alt="Delete" ></a>
                       </div>';
                 $data = (array) $records;
@@ -297,7 +293,7 @@ class operationsController extends Controller
                 $payload = $result->payload;
                 $resultsCount = count($payload);
                 foreach ($payload as $key => $row) {
-                    //  <a style="color: #ba0c2f !important;" href="' . route('admin.add_edit_de_manifist', ['id' => $row->id]) . '" class="" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' . asset('images/default/svg/edit.svg') . '" width="15" alt="Edit"></a>
+                    //  <a style="color: #ba0c2f !important;" href="' . route('admin.add_edit_de_manifist', ['id' => $row->id]) . '" class="" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' . asset('assets/icons/Edit.svg') . '" width="15" alt="Edit"></a>
                     $actions =
                         '<div class="action-perform-btns">
                     <a style="color: #ba0c2f !important;" target="_blank" href="' .
@@ -309,7 +305,7 @@ class operationsController extends Controller
                     //  <a table="de_manifist" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' .
                     //     $row->id .
                     //     '" data-toggle="tooltip" title="Delete"><img src="' .
-                    //     asset('images/default/svg/delete.svg') .
+                    //     asset('assets/icons/Delete.svg') .
                     //     '" width="15" alt="Delete"></a>
 
                     $aaData[] = [
@@ -349,7 +345,7 @@ class operationsController extends Controller
                     <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' .
                     $value->consignment_no .
                     '" data-bs-placement="top" title="Delete"><img src="' .
-                    asset('images/default/svg/delete.svg') .
+                    asset('assets/icons/Delete.svg') .
                     '" width="15" alt="Delete" ></a>
                     </div>';
                 $html .=
@@ -462,14 +458,14 @@ class operationsController extends Controller
                 $resultsCount = count($payload);
                 $aaData = [];
                 $i = 1;
-                // <a table="delivery_sheet" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete"></a>
+                // <a table="delivery_sheet" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('assets/icons/Delete.svg') . '" width="15" alt="Delete"></a>
                 foreach ($payload as $key => $row) {
                     $actions =
                         '<div class="action-perform-btns">
                 <a style="color: #ba0c2f !important;" href="' .
                         route('admin.add_edit_deliverySheet', ['id' => $row->sheet_no]) .
                         '" class="" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' .
-                        asset('images/default/svg/edit.svg') .
+                        asset('assets/icons/Edit.svg') .
                         '" width="15" alt="Edit"></a>
                 <a style="color: #ba0c2f !important;" target="_blank" href="' .
                         route('admin.dileverySheetPDF', ['id' => $row->sheet_no]) .
@@ -570,7 +566,7 @@ class operationsController extends Controller
                     <a class="rem_row" style="color: #ba0c2f !important;" href="javascript:void(0);" data-bs-toggle="tooltip" data-id="' .
                 $shipment_no .
                 '" data-bs-placement="top" title="Delete"><img src="' .
-                asset('images/default/svg/delete.svg') .
+                asset('assets/icons/Delete.svg') .
                 '" width="15" alt="Delete" ></a>
                     </div>';
             $data = (array) $payload;
@@ -684,12 +680,12 @@ class operationsController extends Controller
                         '" data-route="' .
                         route('admin.add_edit_couriers') .
                         '" class="edit-item" data-toggle="tooltip" title="Edit" odidcn="28"><img src="' .
-                        asset('images/default/svg/edit.svg') .
+                        asset('assets/icons/Edit.svg') .
                         '" width="15" alt="Edit"></a>
               <a table="courier_details" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' .
                         $row->id .
                         '" data-toggle="tooltip" title="Delete"><img src="' .
-                        asset('images/default/svg/delete.svg') .
+                        asset('assets/icons/Delete.svg') .
                         '" width="15" alt="Delete"></a>
           </div>';
                     $aaData[] = [
@@ -1307,12 +1303,12 @@ class operationsController extends Controller
                     <a style="color: #ba0c2f !important;" href="' .
                         route('ops.add-edit-sub-users', ['id' => $row->id]) .
                         '" class="" data-toggle="tooltip" title="Edit"><img src="' .
-                        asset('images/default/svg/edit.svg') .
+                        asset('assets/icons/Edit.svg') .
                         '" width="15" alt="Edit"></a>
                   <a table="employees" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' .
                         $row->id .
                         '" data-toggle="tooltip" title="Delete"><img src="' .
-                        asset('images/default/svg/delete.svg') .
+                        asset('assets/icons/Delete.svg') .
                         '" width="15" alt="Delete"></a>
               </div>';
                     $aaData[] = [

@@ -111,7 +111,7 @@
                                             @elseif(is_customer_sub())
                                                 <input type="hidden" name="sub_account_acno" value="{{ session('acno') }}">
                                             @endif
-                                            <div class="mb-3 col-md-6 px-3">
+                                            {{-- <div class="mb-3 col-md-6 px-3">
                                                 <label class="form-label">Select Country</label>
                                                 <select required
                                                     class="form-control form-control-lg form-select input_field"
@@ -135,7 +135,7 @@
                                                     data-allow-clear="1">
                                                     <option value="">Select City</option>
                                                 </select>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </form>
                                 </div>
@@ -238,7 +238,7 @@
                                                     name="customer_ntn" placeholder="Enter NTN" class="ntnNumber"
                                                     value="">
                                             </div>
-                                            <div class="mb-3 col-md-6 px-3">
+                                            {{-- <div class="mb-3 col-md-6 px-3">
                                                 <label class="form-label">Select Country</label>
                                                 <select required
                                                     class="form-control form-control-lg form-select input_field"
@@ -262,7 +262,7 @@
                                                     data-allow-clear="1">
                                                     <option value="">Select City</option>
                                                 </select>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-6 mb-3 px-3">
                                                 <label for="user_name">User Name<span class="req">*</span></label>
                                                 <input type="string" minlength="4" maxlength="25"
@@ -308,6 +308,7 @@
                 </div>
             </div>
         @endif
+
         <div class="app-content--inner order-detail-wrapper">
             <div class="pb-4 text-center text-xl-left">
                 <div class="row align-items-center">
@@ -347,8 +348,7 @@
                                             <div class="row">
                                                 @if (is_ops())
                                                     <div class="mb-3 col-md-6 px-3">
-                                                        <label class="form-label" for="" id="">
-                                                            Select Customer</label>
+                                                        <label class="form-label" for="" id="">Select Customer</label>
                                                         <select required
                                                             class="form-control form-select customer_acno form-control-lg input_field"
                                                             id="customer_acno" data-toggle="select2"
@@ -364,8 +364,7 @@
                                                         </select>
                                                     </div>
                                                 @else
-                                                    <input type="hidden" name="customer_acno"
-                                                        value="{{ session('acno') }}">
+                                                    <input type="hidden" id="customer_acno" name="customer_acno" value="{{ session('acno') }}">
                                                 @endif
                                                 <div class="mb-3 col-md-6">
                                                     <label class="form-label" for="pickup_locations" >

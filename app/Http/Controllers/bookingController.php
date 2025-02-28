@@ -47,10 +47,14 @@ class bookingController extends Controller
                 $customer_acno = session('acno');
             }elseif (is_customer_sub()) {
                 $customer_acno = session('acno');
-            }elseif (session('type') == '3') {
+            }elseif($request->customer_acno != ""){
+                $customer_acno = $request->customer_acno;
+            }
+            if (session('type') == '3') {
                 $employee_id = session('employee_id');
             }
             $data = compact('company_id', 'start_date', 'end_date', 'country_id', 'destination_id', 'status_id', 'customer_acno','employee_id');
+           
             $result = getAPIdata('shipment/index', $data);
             $aaData = [];
             $i = 1;
@@ -58,7 +62,6 @@ class bookingController extends Controller
             if ($result->status == 1) {
                 $payload = $result->payload;
                 $resultsCount = count($payload);
-                // <a table="shipments" class="delete" style="color: #ba0c2f !important;" href="javascript:void(0);" data-id="' . $row->id . '" data-toggle="tooltip" title="Delete"><img src="' . asset('images/default/svg/delete.svg') . '" width="15" alt="Delete"></a>
                 foreach ($payload as $key => $row) {
                     $status_class = ' badge-neutral-' . getStatusBadge($row->status) . ' text-' . getStatusBadge($row->status);
                     $statusBadge = '<button table="shipments" data-id="' . $row->id . '" data-status="' . ($row->active == 1 ? '0' : '1') . '" class="btn badge badge-pill' . $status_class . '">' . $row->status_name . '</button>';
@@ -155,42 +158,29 @@ class bookingController extends Controller
           echo compressJson($arraylist);
         }
     }
-
-  
     // for add and edit the manual_booking
-
     public function add_edit_bookings(Request $request, $id = null)
     {
         // to manage the add and edit view page
 
         if ($request->isMethod('GET')) {
             $countries = get_all_countries();
-
             $check = check_company_status();
-
             $currencies = get_currencies();
-
             get_all_services();
-
             if ($check != 1) {
                 return redirect()->back()->with('error', 'Please complete your profile to proceed');
             }
-
             if ($id == null && $request->isMethod('GET')) {
                 $title = 'Add Manual Booking';
-
                 $type = 'add';
-
                 if (is_ops()) {
                     $customers_function = get_customers();
-
                     $customers = $customers_function->original['payload'];
                 } else {
                     $customers = [];
                 }
-
                 $data = compact('title', 'type', 'currencies', 'customers', 'countries');
-
                 return view('shipments.addEditBooking')->with($data);
             } elseif ($id != null && $request->isMethod('GET')) {
                 $title = 'Edit Manual Booking';

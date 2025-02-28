@@ -74,18 +74,11 @@ class commonController extends Controller
         return response()->json($return);
     }
 
-    // public function get_riders_dropdown()
-    // {
-    //     $param = ['company_id' => session('company_id'), 'account_type' => session('type'), 'user_id' => session('logged_id')];
-    //     $result = getAPIdata('common/getRiders', $param);
-    //     $payload = $result;
-    //     return $payload;
-    // }
+
     public function get_riders_dropdown()
     {
         $param = ['company_id' => session('company_id'), 'account_type' => session('type'), 'user_id' => session('logged_id'),'type'=>"riders"];
         $result = getAPIdata('common/listings', $param);
-
         $payload = $result;
         return $payload;
     }
@@ -241,5 +234,18 @@ class commonController extends Controller
             return response()->json($check);
         }
         return response()->json(['error' => 'Invalid request'], 400);
+    }
+
+    public function add_city(Request $request){
+        $data = ['city_name' => $request->city_name, 'country_id' => (int) $request->country_id];
+        $result = getAPIdata('common/addCity', $data);
+        if($result->status == '1'){
+            $directory = base_path('app/Listings/Cities/cities.txt');
+            if (file_exists($directory)) {
+                unlink($directory);
+                get_all_cities();
+            }
+        }
+        return response()->json($result);
     }
 }

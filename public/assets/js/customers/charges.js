@@ -13,29 +13,40 @@ $(document).ready(function () {
         var form_id = $(this).data('form_id');
         var btn_text = $(this).text();
         var formdata = new FormData($(form_id)[0]);
-        $(".add_new_charge_btn").attr("disabled", true).text("Please Wait....");
-        $.ajax({
-            url: BASEURL + "insert-charges",
-            type: "POST",
-            data: formdata,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 800000,
-            success: function (result) {
-                if (result.status == 1) {
-                    initSelect2();
-                    notify("success", result.message, result.payload);
-                    location.reload();
-                    $(".add_new_charge_btn").removeAttr("disabled", true).text(btn_text)
-                } else {
-                    notify("danger", result.message, result.payload);
-                    $(".add_new_charge_btn").removeAttr("disabled", true).text(btn_text)
-                }
-            },
-            error: function (xhr, err) {
-                notify("warning", "Oh snap!", "Something went while wrong performing operation");
-                $(".add_new_charge_btn").removeAttr("disabled", true).text(btn_text)
+        confirm_sweet("Are you sure you want to create tariff ?").then(action => {
+            if (action) {
+                $(".add_new_charge_btn").attr("disabled", true).text("Please Wait....");
+                $.ajax({
+                    url: BASEURL + "insert-charges",
+                    type: "POST",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 800000,
+                    success: function (result) {
+                        if (result.status == 1) {
+                            initSelect2();
+                            notify("success", "Success",result.message);
+                            location.reload();
+                        } else {
+                            if (result.payload.errors.length > 0) {
+                                let message = result.payload.errors.map(data =>
+                                    data.message
+                                ).join("\n");
+                                notify("danger",result.message,message);
+                            } else {
+                                notify("danger", result.message, "");
+                            }
+                            $(".add_new_charge_btn").removeAttr("disabled", true).text(btn_text);
+                            // destroyLoader('add_new_charge_btn', btn_text, 'btn-orio')
+                        }
+                    },
+                    error: function (xhr, err) {
+                        notify("warning", "Oh snap!", "Something went while wrong performing operation");
+                        $(".add_new_charge_btn").removeAttr("disabled", true).text(btn_text)
+                    }
+                });
             }
         });
     });
@@ -74,18 +85,24 @@ $(document).ready(function () {
             success: function (result) {
                 if (result.status == 1) {
                     notify("success", "Success", result.message);
-                    window.setTimeout(function () {
-                        window.location.reload();
-                        // window.location.href = BASEURL + 'customers';
-                    }, 1000);
-                    destroyLoader('update_tariff', title, 'btn btn-secondary-orio')
+                    // window.setTimeout(function () {
+                    //     window.location.reload();
+                    // }, 1000);
+                    destroyLoader('update_tariff', title, 'btn-secondary-orio')
                 } else {
-                    notify("danger", "Error", result.message);
-                    destroyLoader('update_tariff', title, 'btn btn-secondary-orio')
+                    if (result.payload.errors.length > 0) {
+                        let message = result.payload.errors.map(data =>
+                            data.message
+                        ).join("\n");
+                        notify("danger",result.message,message);
+                    } else {
+                        notify("danger", result.message, "");
+                    }
+                    destroyLoader('update_tariff', title, 'btn-secondary-orio')
                 }
             },
             error: function (xhr, err) {
-                destroyLoader('update_tariff', title, 'btn btn-secondary-orio')
+                destroyLoader('update_tariff', title, 'btn-secondary-orio')
                 var errorMessage = xhr.responseJSON.message;
                 notify("warning", errorMessage);
             }
@@ -103,14 +120,13 @@ $(document).on('click', '.remove_row', function () {
     $(this).parent().parent().remove();
 });
 
-$(document).on('change','#destination_country',function(){
+$(document).on('change', '#destination_country', function () {
     var id = $(this).val();
     const originalOptions = `<option value="T-1">Tier-1</option><option value="T-2">Tier-2</option><option value="T-3">Tier-3</option>`;
-    if(id != '395')
-    {
-        $('#region_type').html('<option value="DEF">Default</option>')   
-    }else{
-        $('#region_type').html(originalOptions)           
+    if (id != '395') {
+        $('#region_type').html('<option value="DEF">Default</option>')
+    } else {
+        $('#region_type').html(originalOptions)
     }
 });
 
@@ -144,17 +160,37 @@ function append_rows(type, count, forms, input_hidden, display_table) {
         var $thisForm = $(this);
         var rowData = {
             count: count,
-            service_id: null, origin_country: null, destination_country: null,
-            origin_country_name: null, destination_country_name: null, service_name: null,
-            tarif_service_name: null, region_type: null, start_weight: null, end_weight: null,
-            charges: null, add_weight: null, add_charges: null, rto_charges: null,
-            add_rto_weight: null, add_rto_charges: null, handling_service_name: null,
-            min_amt: null, max_amt: null, handling_charges: null, handling_charges_type: null,
-            deducton_type: null, deducton_type_label: null, additional_service_name: null,
-            add_charges_type: null, add_charges_name: null, add_charges_amt: null,
-            additional_charges_type: null, additional_deduction_type: null
+            service_id: null,
+            origin_country: null,
+            destination_country: null,
+            origin_country_name: null,
+            destination_country_name: null,
+            service_name: null,
+            tarif_service_name: null,
+            region_type: null,
+            start_weight: null,
+            end_weight: null,
+            charges: null,
+            add_weight: null,
+            add_charges: null,
+            rto_charges: null,
+            add_rto_weight: null,
+            add_rto_charges: null,
+            handling_service_name: null,
+            min_amt: null,
+            max_amt: null,
+            handling_charges: null,
+            handling_charges_type: null,
+            deducton_type: null,
+            deducton_type_label: null,
+            additional_service_name: null,
+            add_charges_type: null,
+            add_charges_name: null,
+            add_charges_amt: null,
+            additional_charges_type: null,
+            additional_deduction_type: null
         };
-        
+
 
         if (type === "tarrif") {
             def_class = '.default-tarif';
@@ -304,14 +340,13 @@ function checkForDuplicateRows(form_id, forms, input_hidden) {
                 return false;
             }
             if (ServiceName === rowServiceName && RegionType === rowRegionType) {
-                if((originCountry == rowOriginCountry) && (destinationCountry == rowDestinationCountry))
-                {
-                    if (startWeight === rowStartWeight || startWeight <= rowStartWeight) {
-                        msg = "Start weight overlaps with an existing range.";
-                        isDuplicate = true;
-                        return false;
-                    } else if (endWeight == rowEndWeight || endWeight <= rowEndWeight) {
-                        msg = "End weight overlaps with an existing range.";
+                if ((originCountry == rowOriginCountry) && (destinationCountry == rowDestinationCountry)) {
+                    if (
+                        (startWeight >= rowStartWeight && startWeight < rowEndWeight) || // New start weight falls inside an existing range
+                        (endWeight > rowStartWeight && endWeight <= rowEndWeight) || // New end weight falls inside an existing range
+                        (startWeight <= rowStartWeight && endWeight >= rowEndWeight) // New range fully covers the existing range
+                    ) {
+                        msg = "Weight range overlaps with an existing range.";
                         isDuplicate = true;
                         return false;
                     }
@@ -356,18 +391,16 @@ function checkForDuplicateRows(form_id, forms, input_hidden) {
                 return false;
             }
             if (DeductionType == rowDeduction) {
-                if (min_amt <= rowMinAmt) {
-                    msg = "Minimum ammount should be greater then previous one."
+                if (min_amt < rowMaxAmt) {
+                    msg = "Minimum amount should be greater than or equal to the previous maximum amount.";
                     isDuplicate = true;
                     return false;
                 } else if (max_amt <= rowMaxAmt) {
-                    msg = "Maximum ammount should be greater then previous one."
+                    msg = "Maximum amount should be greater than the previous maximum amount.";
                     isDuplicate = true;
                     return false;
                 }
-
             }
-
         });
     }
     if (input_hidden == '#additional_hidden_feilds') {
@@ -402,9 +435,15 @@ function checkForDuplicateRows(form_id, forms, input_hidden) {
         });
     }
     if (isDuplicate) {
-        return { "status": 0, "msg": msg }
+        return {
+            "status": 0,
+            "msg": msg
+        }
     } else {
-        return { "status": 1, "msg": msg }
+        return {
+            "status": 1,
+            "msg": msg
+        }
     }
 
 }
